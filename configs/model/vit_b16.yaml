@@ -1,0 +1,5 @@
+_target_: models.vit_b16_pretrained.vit_b16_pretrained
+weight_path: /home/sota/research/sotaohnuma/coffee/src/downloaded_models/vit_b_16-c867db91.pth
+num_classes: 2
+name: vit_b16
+

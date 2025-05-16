@@ -1,0 +1,11 @@
+defaults:
+  - data: bean_180
+  - train: base
+  - model: cnn
+  - _self_
+num_classes: 2
+hydra:
+  run:
+    dir: outputs/${data.name}/${model.name}/${train.name}/${now:%Y-%m-%d_%H-%M-%S}
+  job:
+    chdir: true

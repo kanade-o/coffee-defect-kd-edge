@@ -1,0 +1,106 @@
+# src/train.py
+import os, copy, hydra, torch, matplotlib.pyplot as plt
+from omegaconf import DictConfig, OmegaConf
+from hydra.utils import instantiate
+from torchvision.datasets import ImageFolder
+from torchvision import transforms
+from torch.utils.data import DataLoader
+import torch.nn as nn
+from hydra.utils import instantiate, get_original_cwd
+
+# --------------------------- 便利関数 --------------------------- #
+def run_epoch(model, loader, loss_fn, opt=None):
+    is_train = opt is not None
+    model.train() if is_train else model.eval()
+    total, correct, loss_sum = 0, 0, 0.0
+
+    with torch.set_grad_enabled(is_train):
+        for x, y in loader:
+            x, y = x.to(device), y.to(device)
+            if is_train:
+                opt.zero_grad()
+            out = model(x)
+            loss = loss_fn(out, y)
+            if is_train:
+                loss.backward()
+                opt.step()
+
+            loss_sum += loss.item() * y.size(0)
+            pred = out.argmax(1)
+            correct += (pred == y).sum().item()
+            total += y.size(0)
+
+    return loss_sum / total, correct / total
+# ---------------------------------------------------------------- #
+
+@hydra.main(version_base=None, config_path="../configs", config_name="config")
+def main(cfg: DictConfig):
+    global device
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    print("ORIGINAL CWD :", get_original_cwd())  # ★ プロジェクトルート
+    print("RUN CWD      :", os.getcwd())         # ★ outputs/… のはず
+
+    # ---------- DataLoader ----------
+    tf = transforms.Compose([
+        #transforms.Resize((cfg.data.input_size, cfg.data.input_size)),
+        transforms.Resize((224, 224)),
+        transforms.ToTensor()
+    ])
+    train_dl = DataLoader(
+        ImageFolder(cfg.data.train_dir, tf),
+        batch_size=cfg.train.batch_size, shuffle=True)
+    val_dl = DataLoader(
+        ImageFolder(cfg.data.val_dir, tf),
+        batch_size=cfg.train.batch_size, shuffle=False)
+
+    # ---------- Model ----------
+    if not hasattr(cfg, "model"):
+        raise ValueError("必ず model=<モデル名> を指定してください")
+
+    model_cfg_dict = OmegaConf.to_container(cfg.model, resolve=True)
+    model_cfg_dict.pop("name", None)
+    model = instantiate(model_cfg_dict, num_classes=cfg.num_classes).to(device)
+
+    # ---------- Optimizer / Loss ----------
+    opt = torch.optim.Adam(model.parameters(), lr=cfg.train.lr)
+    loss_fn = nn.CrossEntropyLoss()
+
+    # ---------- ログ用リスト ----------
+    tr_losses, tr_accs, vl_losses, vl_accs = [], [], [], []
+    best_acc = 0.0
+
+    # ---------- Epoch loop ----------
+    for epoch in range(cfg.train.epochs):
+        tr_loss, tr_acc = run_epoch(model, train_dl, loss_fn, opt)
+        vl_loss, vl_acc = run_epoch(model, val_dl,   loss_fn)
+
+        tr_losses.append(tr_loss); tr_accs.append(tr_acc)
+        vl_losses.append(vl_loss); vl_accs.append(vl_acc)
+
+        print(f"[{epoch+1:02d}/{cfg.train.epochs}] "
+              f"train {tr_acc:.3%}/{tr_loss:.4f} | "
+              f"val {vl_acc:.3%}/{vl_loss:.4f}")
+
+#        if vl_acc > best_acc:
+#            best_acc = vl_acc
+#            torch.save(model.state_dict(), "best.pt")
+
+    # ---------- Plot curves ----------
+    epochs = range(1, cfg.train.epochs + 1)
+
+    plt.figure()
+    plt.plot(epochs, tr_losses, label="train")
+    plt.plot(epochs, vl_losses, label="val")
+    plt.xlabel("epoch"); plt.ylabel("loss"); plt.legend(); plt.title("Loss")
+    plt.savefig("loss_curve.png", dpi=150)
+
+    plt.figure()
+    plt.plot(epochs, tr_accs, label="train")
+    plt.plot(epochs, vl_accs, label="val")
+    plt.xlabel("epoch"); plt.ylabel("accuracy"); plt.legend(); plt.title("Accuracy")
+    plt.savefig("accuracy_curve.png", dpi=150)
+
+if __name__ == "__main__":
+    main()
+
