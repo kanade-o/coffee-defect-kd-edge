@@ -1,5 +1,7 @@
-__pychache__
+__pycache__
 .venv/
 data/
 *.pth
 *.jpg
+*.log
+*.lg

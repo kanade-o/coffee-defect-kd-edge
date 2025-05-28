@@ -1,0 +1,23 @@
+data:
+  name: bean_180
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/dataset_0501/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/dataset_0501/val
+  input_size: 180
+train:
+  epochs: 100
+  batch_size: 10
+  lr: 0.001
+  name: base
+model:
+  _target_: vit_pytorch.ViT
+  image_size: 224
+  patch_size: 8
+  num_classes: 2
+  dim: 256
+  depth: 4
+  heads: 6
+  mlp_dim: 256
+  dropout: 0.2
+  emb_dropout: 0.1
+  name: vit
+num_classes: 2
