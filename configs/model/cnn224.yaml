@@ -1,2 +1,2 @@
 _target_: models.cnn_224.CNN224
-name: cnn_224
+name: cnn224
