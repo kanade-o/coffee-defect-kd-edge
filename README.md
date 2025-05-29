@@ -11,3 +11,9 @@
 python src/train.py model=<model_name> data=<dataset_name> train.device_id=<gpu_id> train.batch_size=<n>
 ```
 - device_idは, 実行するときに必ず指定してくださいの方がいいかも
+
+### バックグラウンドで実行したい場合
+```
+nohup sh -c "python src/train.py model=<model_name> data=<dataset_name> train.device_id=<gpu_id> train.batch_size=<n>; python src/train.py model=<model_name> data=<dataset_name> train.device_id=<gpu_id> train.batch_size=<n>" > hoge.log &
+```
+- &つけないとバックグラウンドで実行されないので注意
