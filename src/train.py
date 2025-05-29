@@ -8,7 +8,9 @@ from torch.utils.data import DataLoader
 import torch.nn as nn
 from hydra.utils import instantiate, get_original_cwd
 
-# --------------------------- 便利関数 --------------------------- #
+os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "2,3,4"
+
 def run_epoch(model, loader, loss_fn, opt=None):
     is_train = opt is not None
     model.train() if is_train else model.eval()
@@ -31,10 +33,10 @@ def run_epoch(model, loader, loss_fn, opt=None):
             total += y.size(0)
 
     return loss_sum / total, correct / total
-# ---------------------------------------------------------------- #
 
 @hydra.main(version_base=None, config_path="../configs", config_name="config")
 def main(cfg: DictConfig):
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.train.device_id)
     global device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -61,7 +63,12 @@ def main(cfg: DictConfig):
 
     model_cfg_dict = OmegaConf.to_container(cfg.model, resolve=True)
     model_cfg_dict.pop("name", None)
-    model = instantiate(model_cfg_dict, num_classes=cfg.num_classes).to(device)
+    model = instantiate(model_cfg_dict, num_classes=cfg.num_classes)
+#    device_ids = ["cuda:6", "cuda:7", "cuda:8", "cuda:9"]
+#    if torch.cuda.device_count() > 1:
+#        print(f"==> Using {torch.cuda.device_count()} GPUs via DataParallel")
+#        model = nn.DataParallel(model, device_ids=device_ids)
+    model = model.to(device)
 
     # ---------- Optimizer / Loss ----------
     opt = torch.optim.Adam(model.parameters(), lr=cfg.train.lr)

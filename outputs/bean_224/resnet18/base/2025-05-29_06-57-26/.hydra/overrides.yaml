@@ -1,0 +1,2 @@
+- model=resnet18
+- train.device_id=4

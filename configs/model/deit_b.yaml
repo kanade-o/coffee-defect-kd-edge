@@ -1,0 +1,2 @@
+name: deit_b
+_target_: models.deit_b.deit_b

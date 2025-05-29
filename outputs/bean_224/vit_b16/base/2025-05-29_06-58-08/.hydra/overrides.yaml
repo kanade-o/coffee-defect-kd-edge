@@ -1,0 +1,2 @@
+- model=vit_b16
+- train.device_id=5

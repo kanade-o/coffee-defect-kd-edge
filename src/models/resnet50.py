@@ -1,9 +1,7 @@
 import torch.nn as nn
-from torchvision.models import resnet50
+import torchvision.models as models
 
-def resnet(weight_path, num_classes=2):
-    model = resnet50(pretrained=True)
-    state = torch.load(weight_path, map_location="cpu")
-    model.load_state_dict(state)
+def resnet50(num_classes=2):
+    model = models.resnet50(pretrained=True)
     model.fc = nn.Linear(model.fc.in_features, num_classes)
     return model

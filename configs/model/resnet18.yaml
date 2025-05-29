@@ -1,0 +1,2 @@
+name: resnet18
+_target_: models.resnet18.resnet18
