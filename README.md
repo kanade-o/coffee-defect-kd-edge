@@ -8,5 +8,6 @@
 
 ## 実行方法
 ```
-python src/train.py model=<model_name>
+python src/train.py model=<model_name> data=<dataset_name> train.device_id=<gpu_id> train.batch_size=<n>
 ```
+- device_idは, 実行するときに必ず指定してくださいの方がいいかも
