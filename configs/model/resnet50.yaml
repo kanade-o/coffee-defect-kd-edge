@@ -1,0 +1,2 @@
+_target_: models.resnet50.resnet
+name: resnet50

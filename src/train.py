@@ -43,9 +43,10 @@ def main(cfg: DictConfig):
 
     # ---------- DataLoader ----------
     tf = transforms.Compose([
-        #transforms.Resize((cfg.data.input_size, cfg.data.input_size)),
-        transforms.Resize((224, 224)),
-        transforms.ToTensor()
+        transforms.Resize((cfg.data.input_size, cfg.data.input_size)),
+        #transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
     train_dl = DataLoader(
         ImageFolder(cfg.data.train_dir, tf),

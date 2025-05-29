@@ -1,5 +1,5 @@
 defaults:
-  - data: bean_180
+  - data: bean_224
   - train: base
   - model: cnn
   - _self_
