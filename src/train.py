@@ -7,6 +7,7 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 import torch.nn as nn
 from hydra.utils import instantiate, get_original_cwd
+from utils import evaluate_model, plot_roc_curve, plot_pr_curve
 
 os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
 #os.environ["CUDA_VISIBLE_DEVICES"] = "2,3,4"
@@ -50,12 +51,32 @@ def main(cfg: DictConfig):
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
+
+    print("Start loading train data")
     train_dl = DataLoader(
         ImageFolder(cfg.data.train_dir, tf),
-        batch_size=cfg.train.batch_size, shuffle=True)
+        batch_size=cfg.train.batch_size, 
+        shuffle=True,
+        num_workers=4,
+        pin_memory=True
+    )
+    print("Start loading val data")
     val_dl = DataLoader(
         ImageFolder(cfg.data.val_dir, tf),
-        batch_size=cfg.train.batch_size, shuffle=False)
+        batch_size=cfg.train.batch_size, 
+        shuffle=False,
+        num_workers=4,
+        pin_memory=True
+    )
+    print("Start loading test data")
+    test_dl = DataLoader(
+        ImageFolder(cfg.data.test_dir, tf),
+        batch_size=cfg.train.batch_size, 
+        shuffle=False,
+        num_workers=4,
+        pin_memory=True
+    )
+    print("Finished DataLoader setup")
 
     # ---------- Model ----------
     if not hasattr(cfg, "model"):
@@ -80,6 +101,7 @@ def main(cfg: DictConfig):
 
     # ---------- Epoch loop ----------
     for epoch in range(cfg.train.epochs):
+        print(f"Start: {epoch}")
         tr_loss, tr_acc = run_epoch(model, train_dl, loss_fn, opt)
         vl_loss, vl_acc = run_epoch(model, val_dl,   loss_fn)
 
@@ -90,9 +112,9 @@ def main(cfg: DictConfig):
               f"train {tr_acc:.3%}/{tr_loss:.4f} | "
               f"val {vl_acc:.3%}/{vl_loss:.4f}")
 
-#        if vl_acc > best_acc:
-#            best_acc = vl_acc
-#            torch.save(model.state_dict(), "best.pt")
+        if vl_acc > best_acc:
+            best_acc = vl_acc
+            torch.save(model.state_dict(), "best.pt")
 
     # ---------- Plot curves ----------
     epochs = range(1, cfg.train.epochs + 1)
@@ -108,6 +130,19 @@ def main(cfg: DictConfig):
     plt.plot(epochs, vl_accs, label="val")
     plt.xlabel("epoch"); plt.ylabel("accuracy"); plt.legend(); plt.title("Accuracy")
     plt.savefig("accuracy_curve.png", dpi=150)
+
+    # --- Test ----
+    model.load_state_dict(torch.load("best.pt"))
+    metrics, curves = evaluate_model(model, test_dl, device)
+    print("\n[Test Evaluation]")
+    for k, v in metrics.items():
+        print(f" {k.capitalize():9}: {v:.3f}")
+
+    fpr, tpr, _ = curves["roc"]
+    plot_roc_curve(fpr, tpr, metrics["auc"])
+
+    recall, precision, _ = curves["pr"]
+    plot_pr_curve(recall, precision)
 
 if __name__ == "__main__":
     main()

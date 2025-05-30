@@ -1,0 +1,4 @@
+- model=cnn224
+- train.batch_size=4
+- train.device_id=4
+- train.epochs=10

@@ -1,3 +1,0 @@
-- model=deit_b
-- train.device_id=8
-- train.batch_size=16
