@@ -1,0 +1,3 @@
+- model=vit
+- train=test
+- train.device_id=9

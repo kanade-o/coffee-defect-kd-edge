@@ -1,0 +1,3 @@
+- model=deit_bd
+- train=test
+- train.device_id=5

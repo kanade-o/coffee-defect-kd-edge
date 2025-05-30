@@ -1,0 +1,15 @@
+[2025-05-30 03:20:20,036][root][INFO] - Start loading train data
+[2025-05-30 03:20:20,151][root][INFO] - Start loading val data
+[2025-05-30 03:20:20,165][root][INFO] - Start loading test data
+[2025-05-30 03:20:20,178][root][INFO] - Finished DataLoader setup
+[2025-05-30 03:20:20,633][root][INFO] - Start: 0
+[2025-05-30 03:22:19,608][root][INFO] - [01/2] train 79.828%/0.4299 | val 87.097%/0.3202
+[2025-05-30 03:22:19,723][root][INFO] - Start: 1
+[2025-05-30 03:24:17,783][root][INFO] - [02/2] train 89.160%/0.2630 | val 89.361%/0.2766
+[2025-05-30 03:24:24,627][root][INFO] - 
+[Test Evaluation]
+[2025-05-30 03:24:24,627][root][INFO] -  Accuracy : 0.889
+[2025-05-30 03:24:24,628][root][INFO] -  Precision: 0.883
+[2025-05-30 03:24:24,628][root][INFO] -  Recall   : 0.896
+[2025-05-30 03:24:24,628][root][INFO] -  F1       : 0.890
+[2025-05-30 03:24:24,628][root][INFO] -  Auc      : 0.955

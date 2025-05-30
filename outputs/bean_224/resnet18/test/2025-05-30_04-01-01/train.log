@@ -1,0 +1,7 @@
+[2025-05-30 04:01:02,133][root][INFO] - Start loading train data
+[2025-05-30 04:01:02,251][root][INFO] - Start loading val data
+[2025-05-30 04:01:02,265][root][INFO] - Start loading test data
+[2025-05-30 04:01:02,279][root][INFO] - Finished DataLoader setup
+[2025-05-30 04:01:02,963][root][INFO] - Start: 0
+[2025-05-30 04:02:53,955][root][INFO] - [01/50] train 94.832%/0.1279 | val 97.167%/0.1172
+[2025-05-30 04:02:54,060][root][INFO] - Start: 1

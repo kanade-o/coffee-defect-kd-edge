@@ -1,5 +1,5 @@
 # src/train.py
-import os, copy, hydra, torch, matplotlib.pyplot as plt
+import os, copy, hydra, torch, logging, matplotlib.pyplot as plt
 from omegaconf import DictConfig, OmegaConf
 from hydra.utils import instantiate
 from torchvision.datasets import ImageFolder
@@ -10,7 +10,12 @@ from hydra.utils import instantiate, get_original_cwd
 from utils import evaluate_model, plot_roc_curve, plot_pr_curve
 
 os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
-#os.environ["CUDA_VISIBLE_DEVICES"] = "2,3,4"
+logging.basicConfig(
+    filename="train.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s"
+)
+logger = logging.getLogger()
 
 def run_epoch(model, loader, loss_fn, opt=None):
     is_train = opt is not None
@@ -41,8 +46,11 @@ def main(cfg: DictConfig):
     global device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    print("ORIGINAL CWD :", get_original_cwd())  # ★ プロジェクトルート
-    print("RUN CWD      :", os.getcwd())         # ★ outputs/… のはず
+    print("ORIGINAL CWD :", get_original_cwd())
+    print("RUN CWD      :", os.getcwd())
+    logger.info("ORIGINAL CWD :", get_original_cwd()) 
+    logger.info("RUN CWD      :", os.getcwd())
+
 
     # ---------- DataLoader ----------
     tf = transforms.Compose([
@@ -53,6 +61,8 @@ def main(cfg: DictConfig):
     ])
 
     print("Start loading train data")
+    logger.info("Start loading train data")
+
     train_dl = DataLoader(
         ImageFolder(cfg.data.train_dir, tf),
         batch_size=cfg.train.batch_size, 
@@ -61,6 +71,7 @@ def main(cfg: DictConfig):
         pin_memory=True
     )
     print("Start loading val data")
+    logger.info("Start loading val data")
     val_dl = DataLoader(
         ImageFolder(cfg.data.val_dir, tf),
         batch_size=cfg.train.batch_size, 
@@ -69,6 +80,7 @@ def main(cfg: DictConfig):
         pin_memory=True
     )
     print("Start loading test data")
+    logger.info("Start loading test data")
     test_dl = DataLoader(
         ImageFolder(cfg.data.test_dir, tf),
         batch_size=cfg.train.batch_size, 
@@ -77,6 +89,7 @@ def main(cfg: DictConfig):
         pin_memory=True
     )
     print("Finished DataLoader setup")
+    logger.info("Finished DataLoader setup")
 
     # ---------- Model ----------
     if not hasattr(cfg, "model"):
@@ -102,6 +115,7 @@ def main(cfg: DictConfig):
     # ---------- Epoch loop ----------
     for epoch in range(cfg.train.epochs):
         print(f"Start: {epoch}")
+        logger.info(f"Start: {epoch}")
         tr_loss, tr_acc = run_epoch(model, train_dl, loss_fn, opt)
         vl_loss, vl_acc = run_epoch(model, val_dl,   loss_fn)
 
@@ -111,6 +125,10 @@ def main(cfg: DictConfig):
         print(f"[{epoch+1:02d}/{cfg.train.epochs}] "
               f"train {tr_acc:.3%}/{tr_loss:.4f} | "
               f"val {vl_acc:.3%}/{vl_loss:.4f}")
+        logger.info(f"[{epoch+1:02d}/{cfg.train.epochs}] "
+                    f"train {tr_acc:.3%}/{tr_loss:.4f} | "
+                    f"val {vl_acc:.3%}/{vl_loss:.4f}")
+
 
         if vl_acc > best_acc:
             best_acc = vl_acc
@@ -135,8 +153,10 @@ def main(cfg: DictConfig):
     model.load_state_dict(torch.load("best.pt"))
     metrics, curves = evaluate_model(model, test_dl, device)
     print("\n[Test Evaluation]")
+    logger.info("\n[Test Evaluation]")
     for k, v in metrics.items():
         print(f" {k.capitalize():9}: {v:.3f}")
+        logger.info(f" {k.capitalize():9}: {v:.3f}")
 
     fpr, tpr, _ = curves["roc"]
     plot_roc_curve(fpr, tpr, metrics["auc"])

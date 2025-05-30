@@ -3,14 +3,14 @@ _target_: vit_pytorch.ViT
 
 # ↓ コンストラクタ引数（好きに追加・変更可）
 image_size: 224
-patch_size: 8
+patch_size: 16
 num_classes: 2   # ← データセット側と連動
 dim: 256
 depth: 4
 heads: 6
 mlp_dim: 256
-dropout: 0.2
-emb_dropout: 0.1
+dropout: 0.01
+emb_dropout: 0.01
 
 name: vit                          # フォルダ名用（任意）
 

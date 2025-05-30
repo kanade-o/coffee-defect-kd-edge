@@ -1,0 +1,3 @@
+- model=cnn224
+- train=test
+- train.device_id=3

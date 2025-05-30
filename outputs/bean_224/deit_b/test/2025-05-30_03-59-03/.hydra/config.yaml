@@ -1,0 +1,16 @@
+data:
+  name: bean_224
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/val
+  test_dir: /home/sota/research/sotaohnuma/coffee//data/bean_224/test
+  input_size: 224
+train:
+  epochs: 50
+  batch_size: 32
+  lr: 0.0001
+  device_id: 4
+  name: test
+model:
+  name: deit_b
+  _target_: models.deit_b.deit_b
+num_classes: 2
