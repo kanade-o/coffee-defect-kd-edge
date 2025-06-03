@@ -1,0 +1,5 @@
+[2025-06-03 07:14:13,234][root][INFO] - Start loading train data
+[2025-06-03 07:14:13,382][root][INFO] - Start loading val data
+[2025-06-03 07:14:13,396][root][INFO] - Start loading test data
+[2025-06-03 07:14:13,410][root][INFO] - Finished DataLoader setup
+[2025-06-03 07:14:13,968][root][INFO] - Start: 0

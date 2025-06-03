@@ -1,0 +1,3 @@
+- model=deit_small_patch16_224
+- train=test2
+- train.device_id=5
