@@ -1,0 +1,16 @@
+[2025-06-03 03:02:54,508][root][INFO] - Start loading train data
+[2025-06-03 03:02:54,707][root][INFO] - Start loading val data
+[2025-06-03 03:02:54,734][root][INFO] - Start loading test data
+[2025-06-03 03:02:54,761][root][INFO] - Finished DataLoader setup
+[2025-06-03 03:02:57,319][timm.models._builder][INFO] - Loading pretrained weights from Hugging Face hub (timm/deit_base_patch16_224.fb_in1k)
+[2025-06-03 03:02:57,697][timm.models._hub][INFO] - [timm/deit_base_patch16_224.fb_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+[2025-06-03 03:02:57,872][timm.models._builder][INFO] - Missing keys (head.weight, head.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+[2025-06-03 03:02:58,518][root][INFO] - Start: 0
+[2025-06-03 03:24:22,621][root][INFO] - [01/100] train 97.738%/0.0594 | val 96.347%/0.1480
+[2025-06-03 03:24:23,242][root][INFO] - Start: 1
+[2025-06-03 03:45:53,596][root][INFO] - [02/100] train 99.786%/0.0066 | val 97.028%/0.1562
+[2025-06-03 03:45:57,623][root][INFO] - Start: 2
+[2025-06-03 04:07:25,593][root][INFO] - [03/100] train 99.825%/0.0055 | val 95.472%/0.2278
+[2025-06-03 04:07:25,593][root][INFO] - Start: 3
+[2025-06-03 04:28:57,829][root][INFO] - [04/100] train 99.830%/0.0050 | val 96.083%/0.1983
+[2025-06-03 04:28:57,829][root][INFO] - Start: 4

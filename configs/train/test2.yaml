@@ -1,0 +1,5 @@
+epochs: 100
+batch_size: 32
+lr: 1e-5
+device_id: 2
+name: test
