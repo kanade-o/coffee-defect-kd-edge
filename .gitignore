@@ -3,6 +3,8 @@ __pycache__
 data/
 *.pth
 *.jpg
+hydra.yaml
 /*.log
 *.lg
 tmp*
+*.pt
