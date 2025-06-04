@@ -6,3 +6,15 @@
 [2025-06-03 07:23:44,892][timm.models._hub][INFO] - [timm/deit_small_patch16_224.fb_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
 [2025-06-03 07:23:45,340][timm.models._builder][INFO] - Missing keys (head.weight, head.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
 [2025-06-03 07:23:46,109][root][INFO] - Start: 0
+[2025-06-03 07:30:16,474][root][INFO] - [01/100] train 96.983%/0.0791 | val 96.792%/0.1196
+[2025-06-03 07:30:16,693][root][INFO] - Start: 1
+[2025-06-03 07:37:01,489][root][INFO] - [02/100] train 99.623%/0.0124 | val 96.333%/0.1712
+[2025-06-03 07:37:01,489][root][INFO] - Start: 2
+[2025-06-03 07:43:43,986][root][INFO] - [03/100] train 99.747%/0.0078 | val 95.889%/0.1834
+[2025-06-03 07:43:43,987][root][INFO] - Start: 3
+[2025-06-03 07:50:26,325][root][INFO] - [04/100] train 99.783%/0.0064 | val 95.917%/0.2021
+[2025-06-03 07:50:26,325][root][INFO] - Start: 4
+[2025-06-03 07:57:09,954][root][INFO] - [05/100] train 99.870%/0.0043 | val 96.417%/0.1861
+[2025-06-03 07:57:09,954][root][INFO] - Start: 5
+[2025-06-03 08:03:53,915][root][INFO] - [06/100] train 99.854%/0.0040 | val 95.806%/0.2047
+[2025-06-03 08:03:53,915][root][INFO] - Start: 6

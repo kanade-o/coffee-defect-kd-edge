@@ -12,5 +12,5 @@ mlp_dim: 256
 dropout: 0.2
 emb_dropout: 0.2
 
-name: vit_two                          # フォルダ名用（任意）
+name: vit_3rd                          # フォルダ名用（任意）
 
