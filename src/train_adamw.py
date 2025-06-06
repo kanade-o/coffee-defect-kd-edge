@@ -105,7 +105,7 @@ def main(cfg: DictConfig):
     model = model.to(device)
 
     # ---------- Optimizer / Loss ----------
-    opt = torch.optim.Adam(model.parameters(), lr=cfg.train.lr)
+    opt = torch.optim.AdamW(model.parameters(), lr=cfg.train.lr, weight_decay=1e-3)
     loss_fn = nn.CrossEntropyLoss()
 
     # ---------- ログ用リスト ----------

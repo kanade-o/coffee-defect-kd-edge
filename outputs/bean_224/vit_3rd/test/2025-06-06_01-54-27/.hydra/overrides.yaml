@@ -1,0 +1,4 @@
+- model=vit_3rd
+- train=test2
+- train.device_id=6
+- train.epochs=200
