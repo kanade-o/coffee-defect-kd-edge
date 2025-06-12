@@ -1,0 +1,16 @@
+data:
+  name: bean_224
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/val
+  test_dir: /home/sota/research/sotaohnuma/coffee//data/bean_224/test
+  input_size: 224
+train:
+  epochs: 150
+  batch_size: 32
+  lr: 0.1
+  device_id: 9
+  name: test3
+model:
+  name: resnet18
+  _target_: models.resnet18.resnet18
+num_classes: 2

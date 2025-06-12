@@ -1,0 +1,3 @@
+- model=resnet18
+- train=test3
+- train.device_id=9
