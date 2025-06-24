@@ -1,0 +1,2 @@
+- model=efficientnetb0
+- train.device_id=9

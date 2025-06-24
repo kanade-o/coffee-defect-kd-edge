@@ -1,0 +1,12 @@
+[2025-06-24 07:06:21,110][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-06-24 07:06:21,110][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/efficientnetb0/base/2025-06-24_07-06-20
+[2025-06-24 07:06:21,110][root][INFO] - Start loading train data
+[2025-06-24 07:06:21,225][root][INFO] - Start loading val data
+[2025-06-24 07:06:21,239][root][INFO] - Start loading test data
+[2025-06-24 07:06:21,252][root][INFO] - Finished DataLoader setup
+[2025-06-24 07:06:22,198][timm.models._builder][INFO] - Loading pretrained weights from Hugging Face hub (timm/efficientnet_b0.ra_in1k)
+[2025-06-24 07:06:24,214][timm.models._hub][INFO] - [timm/efficientnet_b0.ra_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+[2025-06-24 07:06:24,321][timm.models._builder][INFO] - Missing keys (classifier.weight, classifier.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+[2025-06-24 07:06:25,440][root][INFO] - Start: 0
+[2025-06-24 07:12:40,782][root][INFO] - [01/100] train 94.891%/0.1659 | val 95.903%/0.1493
+[2025-06-24 07:12:40,872][root][INFO] - Start: 1
