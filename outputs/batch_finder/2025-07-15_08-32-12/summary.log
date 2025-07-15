@@ -1,0 +1,37 @@
+2025-07-15 08:32:12,147 INFO START batch_finder at 2025-07-15_08-32-12
+2025-07-15 08:32:12,147 INFO train_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/train, val_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/val, input_size=224, init_bs=8
+2025-07-15 08:32:12,147 INFO --- Processing model: resnet18 ---
+2025-07-15 08:32:53,443 INFO resnet18: recommended batch size → 536
+2025-07-15 08:32:53,443 INFO --- Processing model: resnet50 ---
+2025-07-15 08:33:15,404 INFO resnet50: recommended batch size → 137
+2025-07-15 08:33:15,404 INFO --- Processing model: deit_b ---
+2025-07-15 08:33:16,809 INFO Loading pretrained weights from Hugging Face hub (timm/deit_base_patch16_224.fb_in1k)
+2025-07-15 08:33:22,325 INFO [timm/deit_base_patch16_224.fb_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-07-15 08:33:22,396 INFO Missing keys (head.weight, head.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-07-15 08:34:02,624 INFO deit_b: recommended batch size → 92
+2025-07-15 08:34:02,624 INFO --- Processing model: deit_bd ---
+2025-07-15 08:34:03,778 INFO Loading pretrained weights from Hugging Face hub (timm/deit_base_distilled_patch16_224.fb_in1k)
+2025-07-15 08:34:03,995 INFO [timm/deit_base_distilled_patch16_224.fb_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-07-15 08:34:09,555 INFO Missing keys (head.weight, head.bias, head_dist.weight, head_dist.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-07-15 08:34:51,323 INFO deit_bd: recommended batch size → 92
+2025-07-15 08:34:51,324 INFO --- Processing model: deit_small ---
+2025-07-15 08:34:51,668 INFO Loading pretrained weights from Hugging Face hub (timm/deit_small_patch16_224.fb_in1k)
+2025-07-15 08:34:51,911 INFO [timm/deit_small_patch16_224.fb_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-07-15 08:34:53,241 INFO Missing keys (head.weight, head.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-07-15 08:35:23,474 INFO deit_small: recommended batch size → 195
+2025-07-15 08:35:23,474 INFO --- Processing model: CNN224 ---
+2025-07-15 08:35:53,048 INFO CNN224: recommended batch size → 896
+2025-07-15 08:35:53,048 INFO --- Processing model: efficientnet ---
+2025-07-15 08:35:53,133 INFO Loading pretrained weights from Hugging Face hub (timm/efficientnet_b0.ra_in1k)
+2025-07-15 08:35:53,331 INFO [timm/efficientnet_b0.ra_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-07-15 08:35:53,362 INFO Missing keys (classifier.weight, classifier.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-07-15 08:36:14,776 INFO efficientnet: recommended batch size → 136
+2025-07-15 08:36:14,776 INFO --- Processing model: vit ---
+2025-07-15 08:37:01,884 INFO vit: recommended batch size → 529
+2025-07-15 08:37:01,884 INFO --- Processing model: vit_3rd ---
+2025-07-15 08:37:40,335 INFO vit_3rd: recommended batch size → 656
+2025-07-15 08:37:40,335 INFO --- Processing model: vit_two ---
+2025-07-15 08:38:11,577 INFO vit_two: recommended batch size → 704
+2025-07-15 08:38:11,577 INFO --- Processing model: vit_b16 ---
+2025-07-15 08:38:46,673 INFO vit_b16: recommended batch size → 84
+2025-07-15 08:38:46,673 INFO Finished all models. Summary written.

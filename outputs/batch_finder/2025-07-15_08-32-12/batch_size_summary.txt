@@ -1,0 +1,11 @@
+resnet18: 536
+resnet50: 137
+deit_b: 92
+deit_bd: 92
+deit_small: 195
+CNN224: 896
+efficientnet: 136
+vit: 529
+vit_3rd: 656
+vit_two: 704
+vit_b16: 84
