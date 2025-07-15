@@ -1,0 +1,12 @@
+2025-07-15 07:50:43,856 INFO START batch_finder at 2025-07-15_07-50-43
+2025-07-15 07:50:43,857 INFO train_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/train, val_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/val, input_size=224, init_bs=8
+2025-07-15 07:50:43,857 INFO --- Processing model: resnet18 ---
+2025-07-15 07:51:27,278 INFO resnet18: recommended batch size → 536
+2025-07-15 07:51:27,278 INFO --- Processing model: deit_b ---
+2025-07-15 07:51:28,871 INFO Loading pretrained weights from Hugging Face hub (timm/deit_base_patch16_224.fb_in1k)
+2025-07-15 07:51:34,283 INFO [timm/deit_base_patch16_224.fb_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2025-07-15 07:51:39,640 INFO Missing keys (head.weight, head.bias) discovered while loading pretrained weights. This is expected if model is being adapted.
+2025-07-15 07:52:20,404 INFO deit_b: recommended batch size → 92
+2025-07-15 07:52:20,404 INFO --- Processing model: CNN224 ---
+2025-07-15 07:52:51,279 INFO CNN224: recommended batch size → 896
+2025-07-15 07:52:51,279 INFO Finished all models. Summary written.

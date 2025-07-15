@@ -1,0 +1,4 @@
+name: bean_180
+train_dir: /home/sota/research/sotaohnuma/coffee/data/dataset_0501/train
+val_dir: /home/sota/research/sotaohnuma/coffee/data/dataset_0501/val
+input_size: 180

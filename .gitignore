@@ -1,8 +1,8 @@
 __pycache__
 .venv/
-data/
 *.pth
 *.jpg
+.DS_Store
 hydra.yaml
 /*.log
 *.lg
