@@ -1,8 +1,5 @@
-import os
+import os, torch, sys, logging, pytorch_lightning as pl
 from datetime import datetime
-import logging
-import torch
-import pytorch_lightning as pl
 from pytorch_lightning.tuner import Tuner
 from omegaconf import OmegaConf
 from hydra.utils import instantiate, get_original_cwd
@@ -109,16 +106,32 @@ def find_batch_size_for_model(model_name: str, model_cfg_path: str,
 
 
 if __name__ == "__main__":
+    args = sys.argv
+    if not args[1]:
+        exit()
+    gpu_id = args[1]
+    os.environ["CUDA_VISIBLE_DEVICES"] = gpu_id
+
     train_dir   = HOMED + "data/bean_224/train"
     val_dir     = HOMED + "data/bean_224/val"
     input_size  = 224
     init_bs     = 8
     num_classes = 2
+        
+    confd = HOMED + "configs/model/"
 
     model_cfgs = {
-        "resnet18": HOMED + "configs/model/resnet18.yaml",
-        "deit_b":   HOMED + "configs/model/deit_b.yaml",
-        "CNN224":   HOMED + "configs/model/cnn224.yaml",
+        "resnet18": confd + "resnet18.yaml",
+        "resnet50": confd + "resnet50.yaml",
+        "deit_b":   confd + "deit_b.yaml",
+        "deit_bd":   confd + "deit_bd.yaml",
+        "deit_small":   confd + "deit_small_patch16_224.yaml",
+        "CNN224":   confd + "cnn224.yaml",
+        "efficientnet": confd + "efficientnetb0.yaml",
+        "vit": confd + "vit.yaml",
+        "vit_3rd": confd + "vit_3rd.yaml",
+        "vit_two": confd + "vit_two.yaml",
+        "vit_b16": confd + "vit_b16.yaml",
     }
 
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

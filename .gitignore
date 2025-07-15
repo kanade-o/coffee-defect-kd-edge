@@ -8,3 +8,4 @@ hydra.yaml
 *.lg
 tmp*
 *.pt
+*.ckpt

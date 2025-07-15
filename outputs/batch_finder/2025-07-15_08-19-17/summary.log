@@ -1,0 +1,3 @@
+2025-07-15 08:19:17,444 INFO START batch_finder at 2025-07-15_08-19-17
+2025-07-15 08:19:17,444 INFO train_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/train, val_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/val, input_size=224, init_bs=8
+2025-07-15 08:19:17,445 INFO --- Processing model: resnet18 ---
