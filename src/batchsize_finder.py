@@ -98,7 +98,7 @@ def find_batch_size_for_model(model_name: str, model_cfg_path: str,
         datamodule=dm,
         mode="binsearch", 
         init_val=init_bs,
-        max_trials=8
+        max_trials=13
     )
 
     logging.info(f"{model_name}: recommended batch size → {recommended_bs}")
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     train_dir   = HOMED + "data/bean_224/train"
     val_dir     = HOMED + "data/bean_224/val"
     input_size  = 224
-    init_bs     = 8
+    init_bs     = 80
     num_classes = 2
         
     confd = HOMED + "configs/model/"
