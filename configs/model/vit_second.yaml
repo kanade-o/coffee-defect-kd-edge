@@ -1,5 +1,6 @@
 # ViT を直接インスタンス化するだけ
 _target_: vit_pytorch.ViT
+batch_size: 680
 
 # ↓ コンストラクタ引数（好きに追加・変更可）
 image_size: 224
@@ -12,5 +13,5 @@ mlp_dim: 192
 dropout: 0.2
 emb_dropout: 0.2
 
-name: vit_two                          # フォルダ名用（任意）
+name: vit_second                       # フォルダ名用（任意）
 

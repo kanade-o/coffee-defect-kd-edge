@@ -1,0 +1,6 @@
+[2025-07-24 06:43:21,786][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-07-24 06:43:21,787][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/resnet18/base/2025-07-24_06-43-21
+[2025-07-24 06:43:21,787][root][INFO] - Start loading train data
+[2025-07-24 06:43:21,897][root][INFO] - Start loading val data
+[2025-07-24 06:43:21,910][root][INFO] - Start loading test data
+[2025-07-24 06:43:21,923][root][INFO] - Finished DataLoader setup

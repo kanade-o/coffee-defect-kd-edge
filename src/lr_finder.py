@@ -1,23 +1,32 @@
 # src/train.py
-import os, copy, hydra, torch, logging, optuna, matplotlib.pyplot as plt, torch.nn as nn
+import os
+import copy 
+import hydra
+import torch
+import logging
+import optuna
+import torch.nn as nn
+import matplotlib.pyplot as plt
+
 from omegaconf import DictConfig, OmegaConf
 from torchvision import transforms
 from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 from hydra.utils import instantiate, get_original_cwd
-from sklearn.metrics import f1_scores
+from sklearn.metrics import f1_score
 from transformers import get_cosine_schedule_with_warmup
 
 os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
 
 logging.basicConfig(
-    filename="train.log",
+    filename="lr.log",
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s"
 )
 logger = logging.getLogger()
 
 def evaluate(model, val_dl, device):
+    print("starting eval")
     model.eval()
     all_preds = []
     all_labels = []
@@ -32,7 +41,7 @@ def evaluate(model, val_dl, device):
 
 @hydra.main(version_base=None, config_path="../configs", config_name="config")
 def main(cfg: DictConfig):
-    num_epochs = 50
+    num_epochs = 20
     os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.gpu)
     print(cfg.gpu)
     global device
@@ -105,7 +114,7 @@ def main(cfg: DictConfig):
         optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay) 
         criterion = nn.CrossEntropyLoss()
 
-        # ---------- Model ----------
+        # ---------- Scheduler ----------
         total_steps = num_epochs * len(train_dl)
         warmup_steps = int(total_steps * 0.1)
 
@@ -118,6 +127,7 @@ def main(cfg: DictConfig):
         global_step = 0
         print(f"starting train")
         for epoch in range(num_epochs):
+            print(f"epoch: {epoch}")
             model.train()
             for x, y in train_dl:
                 x, y = x.to(device), y.to(device)

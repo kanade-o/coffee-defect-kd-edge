@@ -1,0 +1,9 @@
+[2025-07-24 07:06:15,435][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-07-24 07:06:15,435][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/deit_s/base/2025-07-24_07-06-15
+[2025-07-24 07:06:15,436][root][INFO] - Start loading train data
+[2025-07-24 07:06:15,553][root][INFO] - Start loading val data
+[2025-07-24 07:06:15,567][root][INFO] - Start loading test data
+[2025-07-24 07:06:15,580][root][INFO] - Finished DataLoader setup
+[2025-07-24 07:06:16,394][timm.models._builder][INFO] - Loading pretrained weights from Hugging Face hub (timm/deit_small_patch16_224.fb_in1k)
+[2025-07-24 07:06:16,749][timm.models._hub][INFO] - [timm/deit_small_patch16_224.fb_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+[2025-07-24 07:06:16,779][timm.models._builder][INFO] - Missing keys (head.weight, head.bias) discovered while loading pretrained weights. This is expected if model is being adapted.

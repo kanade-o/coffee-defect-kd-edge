@@ -1,2 +1,3 @@
 name: deit_bd
+batch_size: 90
 _target_: models.deit_bd.deit_bd

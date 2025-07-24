@@ -1,0 +1,3 @@
+epochs: 100
+lr: 0.001
+name: find_lr
