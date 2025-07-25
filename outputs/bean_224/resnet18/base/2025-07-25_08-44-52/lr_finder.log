@@ -1,0 +1,14 @@
+[2025-07-25 08:44:52,482][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-07-25 08:44:52,483][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/resnet18/base/2025-07-25_08-44-52
+[2025-07-25 08:44:52,483][root][INFO] - batch: 539, 
+ {'batch_size': 539, '_target_': 'models.resnet18.resnet18'}
+[2025-07-25 08:44:52,483][root][INFO] - Start loading train data
+[2025-07-25 08:44:52,721][root][INFO] - Start loading val data
+[2025-07-25 08:44:52,748][root][INFO] - Start loading test data
+[2025-07-25 08:44:52,765][root][INFO] - Finished DataLoader setup
+[2025-07-25 08:44:52,765][root][INFO] - Starting Optimize
+[2025-07-25 08:44:53,958][root][INFO] - starting train
+[2025-07-25 08:44:53,959][root][INFO] - epoch: 0
+[2025-07-25 08:46:50,576][root][INFO] - epoch: 1
+[2025-07-25 08:48:52,704][root][INFO] - epoch: 2
+[2025-07-25 08:50:52,885][root][INFO] - epoch: 3

@@ -1,0 +1,11 @@
+[2025-07-25 08:44:09,410][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-07-25 08:44:09,410][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/deit_b/base/2025-07-25_08-44-09
+[2025-07-25 08:44:09,410][root][INFO] - batch: 92, 
+ {'batch_size': 92, '_target_': 'models.deit_b.deit_b'}
+[2025-07-25 08:44:09,411][root][INFO] - Start loading train data
+[2025-07-25 08:44:09,531][root][INFO] - Start loading val data
+[2025-07-25 08:44:09,544][root][INFO] - Start loading test data
+[2025-07-25 08:44:09,559][root][INFO] - Finished DataLoader setup
+[2025-07-25 08:44:09,559][root][INFO] - Starting Optimize
+[2025-07-25 08:44:12,147][root][INFO] - starting train
+[2025-07-25 08:44:12,147][root][INFO] - epoch: 0

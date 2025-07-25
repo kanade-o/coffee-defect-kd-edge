@@ -1,0 +1,13 @@
+[2025-07-25 08:44:39,545][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-07-25 08:44:39,546][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/efficientnet_b0/base/2025-07-25_08-44-39
+[2025-07-25 08:44:39,546][root][INFO] - batch: 136, 
+ {'batch_size': 136, '_target_': 'models.efficientnet_b0.efficientnet_b0'}
+[2025-07-25 08:44:39,547][root][INFO] - Start loading train data
+[2025-07-25 08:44:39,766][root][INFO] - Start loading val data
+[2025-07-25 08:44:39,791][root][INFO] - Start loading test data
+[2025-07-25 08:44:39,821][root][INFO] - Finished DataLoader setup
+[2025-07-25 08:44:39,821][root][INFO] - Starting Optimize
+[2025-07-25 08:44:40,647][root][INFO] - starting train
+[2025-07-25 08:44:40,648][root][INFO] - epoch: 0
+[2025-07-25 08:48:14,407][root][INFO] - epoch: 1
+[2025-07-25 08:51:49,873][root][INFO] - epoch: 2

@@ -1,0 +1,3 @@
+name: efficientnet_b0
+batch_size: 136
+_target_: models.efficientnet_b0.efficientnet_b0

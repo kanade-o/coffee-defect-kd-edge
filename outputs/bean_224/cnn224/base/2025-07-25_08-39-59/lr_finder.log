@@ -1,0 +1,9 @@
+[2025-07-25 08:39:59,909][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-07-25 08:39:59,910][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/cnn224/base/2025-07-25_08-39-59
+[2025-07-25 08:39:59,910][root][INFO] - batch: 800, 
+ {'_target_': 'models.cnn_224.CNN224', 'batch_size': 800}
+[2025-07-25 08:39:59,910][root][INFO] - Start loading train data
+[2025-07-25 08:40:00,034][root][INFO] - Start loading val data
+[2025-07-25 08:40:00,048][root][INFO] - Start loading test data
+[2025-07-25 08:40:00,062][root][INFO] - Finished DataLoader setup
+[2025-07-25 08:40:00,062][root][INFO] - Starting Optimize

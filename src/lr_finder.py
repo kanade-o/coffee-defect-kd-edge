@@ -27,6 +27,7 @@ logger = logging.getLogger()
 
 def evaluate(model, val_dl, device):
     print("starting eval")
+    logger.info("starting eval")
     model.eval()
     all_preds = []
     all_labels = []
@@ -61,6 +62,7 @@ def main(cfg: DictConfig):
 
     BATCH_SIZE = model_cfg_dict["batch_size"]
     print(f"batch: {BATCH_SIZE}, \n {model_cfg_dict}")
+    logger.info(f"batch: {BATCH_SIZE}, \n {model_cfg_dict}")
     model_cfg_dict.pop("batch_size", None)
 
     # ---------- DataLoader ----------
@@ -101,7 +103,10 @@ def main(cfg: DictConfig):
     print("Finished DataLoader setup")
     logger.info("Finished DataLoader setup")
 
+
     def objective(trial):
+        print(f"trial: {trial.number}")
+
         # ---------- Hyper Parameter ----------
         lr = trial.suggest_float("lr", 1e-5, 1e-2, log=True)
         weight_decay = trial.suggest_float("weight_decay", 1e-5, 1e-1, log=True)
@@ -126,8 +131,10 @@ def main(cfg: DictConfig):
 
         global_step = 0
         print(f"starting train")
+        logger.info(f"starting train")
         for epoch in range(num_epochs):
             print(f"epoch: {epoch}")
+            logger.info(f"epoch: {epoch}")
             model.train()
             for x, y in train_dl:
                 x, y = x.to(device), y.to(device)
@@ -140,19 +147,25 @@ def main(cfg: DictConfig):
                 global_step += 1
 
         print("finished train")
+        logger.info("finished train")
         
         f1 = evaluate(model, val_dl, device)
         print(f"finished eval")
+        logger.info(f"finished eval")
         return f1
     
     # run oputuna
     print("starting optimize")
+    logger.info("Starting Optimize")
     study = optuna.create_study(direction="maximize")
     study.optimize(objective, n_trials=30)
 
     print("Finished")
+    logger.info("Finished")
     for key, value in study.best_params.items():
         print(f" {key}: {value}")
+        logger.info(f" {key}: {value}")
+
 
 if __name__ == "__main__":
     main()

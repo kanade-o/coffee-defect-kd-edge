@@ -1,0 +1,19 @@
+data:
+  name: bean_224
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/val
+  test_dir: /home/sota/research/sotaohnuma/coffee//data/bean_224/test
+  input_size: 224
+train:
+  epochs: 100
+  batch_size: 32
+  lr: 0.001
+  device_id: 2
+  name: base
+model:
+  _target_: models.vit_b16_pretrained.vit_b16
+  num_classes: 2
+  batch_size: 84
+  name: vit_b16
+num_classes: 2
+gpu: 7

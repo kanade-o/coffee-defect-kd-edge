@@ -1,0 +1,2 @@
+- model=efficientnet_b0
+- gpu=4

@@ -1,6 +1,5 @@
 __pycache__
 .venv/
-*.pth
 *.jpg
 .DS_Store
 hydra.yaml
@@ -8,4 +7,5 @@ hydra.yaml
 *.lg
 tmp*
 *.pt
+*.pth
 *.ckpt

@@ -1,0 +1,14 @@
+[2025-07-25 08:45:48,093][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-07-25 08:45:48,094][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/vit_second/base/2025-07-25_08-45-47
+[2025-07-25 08:45:48,095][root][INFO] - batch: 680, 
+ {'_target_': 'vit_pytorch.ViT', 'batch_size': 680, 'image_size': 224, 'patch_size': 16, 'num_classes': 2, 'dim': 192, 'depth': 3, 'heads': 6, 'mlp_dim': 192, 'dropout': 0.2, 'emb_dropout': 0.2}
+[2025-07-25 08:45:48,095][root][INFO] - Start loading train data
+[2025-07-25 08:45:48,312][root][INFO] - Start loading val data
+[2025-07-25 08:45:48,337][root][INFO] - Start loading test data
+[2025-07-25 08:45:48,364][root][INFO] - Finished DataLoader setup
+[2025-07-25 08:45:48,364][root][INFO] - Starting Optimize
+[2025-07-25 08:45:49,117][root][INFO] - starting train
+[2025-07-25 08:45:49,118][root][INFO] - epoch: 0
+[2025-07-25 08:47:39,493][root][INFO] - epoch: 1
+[2025-07-25 08:49:23,623][root][INFO] - epoch: 2
+[2025-07-25 08:50:48,656][root][INFO] - epoch: 3
