@@ -1,3 +1,5 @@
 name: resnet50
 batch_size: 137
 _target_: models.resnet50.resnet50
+lr: 0.00070
+weight_decay: 5.30e-05

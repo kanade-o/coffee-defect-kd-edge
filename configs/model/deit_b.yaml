@@ -1,3 +1,5 @@
 name: deit_b
 batch_size: 92
 _target_: models.deit_b.deit_b
+lr: 2.10e-05
+weight_decay: 0.00037

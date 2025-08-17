@@ -1,3 +1,5 @@
 name: resnet18
 batch_size: 539
 _target_: models.resnet18.resnet18
+lr: 0.0020
+weight_decay: 1.00e-05

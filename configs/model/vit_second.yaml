@@ -1,6 +1,8 @@
 # ViT を直接インスタンス化するだけ
 _target_: vit_pytorch.ViT
 batch_size: 680
+lr: 0.0018
+weight_decay: 2.90e-05
 
 # ↓ コンストラクタ引数（好きに追加・変更可）
 image_size: 224
