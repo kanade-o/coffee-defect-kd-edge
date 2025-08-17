@@ -51,6 +51,27 @@ def main(cfg: DictConfig):
     logger.info("ORIGINAL CWD : %s", get_original_cwd()) 
     logger.info("RUN CWD      : %s", os.getcwd())
 
+    model_cfg_dict = OmegaConf.to_container(cfg.model, resolve=True)
+    model_cfg_dict.pop("name", None)
+
+    BATCH_SIZE = model_cfg_dict["batch_size"]
+    print(f"batch: {BATCH_SIZE}, \n {model_cfg_dict}")
+    logger.info(f"batch: {BATCH_SIZE}, \n {model_cfg_dict}")
+    model_cfg_dict.pop("batch_size", None)
+
+
+    LR = model_cfg_dict["lr"]
+    print(f"lr: {LR}, \n {model_cfg_dict}")
+    logger.info(f"lr: {LR}, \n {model_cfg_dict}")
+    model_cfg_dict.pop("lr", None)
+
+    WEIGHT_DECAY = model_cfg_dict["weight_decay"]
+    print(f"weight_decay: {WEIGHT_DECAY}, \n {model_cfg_dict}")
+    logger.info(f"weight_decay: {WEIGHT_DECAY}, \n {model_cfg_dict}")
+    model_cfg_dict.pop("weight_decay", None)
+
+    model = instantiate(model_cfg_dict, num_classes=cfg.num_classes)
+    model = model.to(device)
 
     # ---------- DataLoader ----------
     tf = transforms.Compose([
@@ -65,7 +86,7 @@ def main(cfg: DictConfig):
 
     train_dl = DataLoader(
         ImageFolder(cfg.data.train_dir, tf),
-        batch_size=cfg.train.batch_size, 
+        batch_size=BATCH_SIZE, 
         shuffle=True,
         num_workers=4,
         pin_memory=True
@@ -74,7 +95,7 @@ def main(cfg: DictConfig):
     logger.info("Start loading val data")
     val_dl = DataLoader(
         ImageFolder(cfg.data.val_dir, tf),
-        batch_size=cfg.train.batch_size, 
+        batch_size=BATCH_SIZE, 
         shuffle=False,
         num_workers=4,
         pin_memory=True
@@ -83,7 +104,7 @@ def main(cfg: DictConfig):
     logger.info("Start loading test data")
     test_dl = DataLoader(
         ImageFolder(cfg.data.test_dir, tf),
-        batch_size=cfg.train.batch_size, 
+        batch_size=BATCH_SIZE, 
         shuffle=False,
         num_workers=4,
         pin_memory=True
@@ -95,17 +116,9 @@ def main(cfg: DictConfig):
     if not hasattr(cfg, "model"):
         raise ValueError("必ず model=<モデル名> を指定してください")
 
-    model_cfg_dict = OmegaConf.to_container(cfg.model, resolve=True)
-    model_cfg_dict.pop("name", None)
-    model = instantiate(model_cfg_dict, num_classes=cfg.num_classes)
-#    device_ids = ["cuda:6", "cuda:7", "cuda:8", "cuda:9"]
-#    if torch.cuda.device_count() > 1:
-#        print(f"==> Using {torch.cuda.device_count()} GPUs via DataParallel")
-#        model = nn.DataParallel(model, device_ids=device_ids)
-    model = model.to(device)
 
     # ---------- Optimizer / Loss ----------
-    opt = torch.optim.Adam(model.parameters(), lr=cfg.train.lr)
+    opt = torch.optim.AdamW(model.parameters(), lr=LR, WEIGHT_DECAY)
     loss_fn = nn.CrossEntropyLoss()
 
     # ---------- ログ用リスト ----------
