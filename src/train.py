@@ -42,7 +42,7 @@ def run_epoch(model, loader, loss_fn, opt=None):
 
 @hydra.main(version_base=None, config_path="../configs", config_name="config")
 def main(cfg: DictConfig):
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.train.device_id)
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.gpu)
     global device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -118,7 +118,7 @@ def main(cfg: DictConfig):
 
 
     # ---------- Optimizer / Loss ----------
-    opt = torch.optim.AdamW(model.parameters(), lr=LR, WEIGHT_DECAY)
+    opt = torch.optim.AdamW(model.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
     loss_fn = nn.CrossEntropyLoss()
 
     # ---------- ログ用リスト ----------
