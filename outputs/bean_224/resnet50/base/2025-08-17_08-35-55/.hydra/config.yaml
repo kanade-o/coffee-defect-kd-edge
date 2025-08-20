@@ -1,0 +1,17 @@
+data:
+  name: bean_224
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/val
+  test_dir: /home/sota/research/sotaohnuma/coffee//data/bean_224/test
+  input_size: 224
+train:
+  epochs: 100
+  name: base
+model:
+  name: resnet50
+  batch_size: 137
+  _target_: models.resnet50.resnet50
+  lr: 0.0007
+  weight_decay: 5.3e-05
+num_classes: 2
+gpu: 7
