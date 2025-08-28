@@ -1,0 +1,8 @@
+[2025-08-25 12:20:27,450][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-08-25 12:20:27,451][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/deit_s/base/2025-08-25_12-20-27
+[2025-08-25 12:20:27,451][root][INFO] - batch: 195, 
+ {'batch_size': 195, '_target_': 'models.deit_s.deit_s', 'lr': 2.1e-05, 'weight_decay': 0.0018}
+[2025-08-25 12:20:27,451][root][INFO] - lr: 2.1e-05, 
+ {'_target_': 'models.deit_s.deit_s', 'lr': 2.1e-05, 'weight_decay': 0.0018}
+[2025-08-25 12:20:27,451][root][INFO] - weight_decay: 0.0018, 
+ {'_target_': 'models.deit_s.deit_s', 'weight_decay': 0.0018}

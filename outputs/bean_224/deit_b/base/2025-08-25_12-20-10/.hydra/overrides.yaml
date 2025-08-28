@@ -1,0 +1,2 @@
+- model=deit_b
+- gpu=7

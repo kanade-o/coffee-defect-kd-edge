@@ -8,6 +8,7 @@ from torch.utils.data import DataLoader
 import torch.nn as nn
 from hydra.utils import instantiate, get_original_cwd
 from utils import evaluate_model, plot_roc_curve, plot_pr_curve
+from transformers import get_cosine_schedule_with_warmup  # ← 追加
 
 os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
 logging.basicConfig(
@@ -16,6 +17,8 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s"
 )
 logger = logging.getLogger()
+
+scheduler = None  # ← 追加（run_epoch内で参照するため）
 
 def run_epoch(model, loader, loss_fn, opt=None):
     is_train = opt is not None
@@ -32,6 +35,9 @@ def run_epoch(model, loader, loss_fn, opt=None):
             if is_train:
                 loss.backward()
                 opt.step()
+                # ← 追加: 各イテレーションでスケジューラを進める（finder.pyと同様）
+                if scheduler is not None:
+                    scheduler.step()
 
             loss_sum += loss.item() * y.size(0)
             pred = out.argmax(1)
@@ -43,7 +49,7 @@ def run_epoch(model, loader, loss_fn, opt=None):
 @hydra.main(version_base=None, config_path="../configs", config_name="config")
 def main(cfg: DictConfig):
     os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.gpu)
-    global device
+    global device, scheduler
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     print("ORIGINAL CWD :", get_original_cwd())
@@ -116,10 +122,18 @@ def main(cfg: DictConfig):
     if not hasattr(cfg, "model"):
         raise ValueError("必ず model=<モデル名> を指定してください")
 
-
     # ---------- Optimizer / Loss ----------
     opt = torch.optim.AdamW(model.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
     loss_fn = nn.CrossEntropyLoss()
+
+    # ---------- Scheduler (finder.pyと同様: 10% warmup + cosine) ----------
+    total_steps = cfg.train.epochs * len(train_dl)
+    warmup_steps = int(total_steps * 0.1)
+    scheduler = get_cosine_schedule_with_warmup(
+        opt,
+        num_warmup_steps=warmup_steps,
+        num_training_steps=total_steps
+    )
 
     # ---------- ログ用リスト ----------
     tr_losses, tr_accs, vl_losses, vl_accs = [], [], [], []
@@ -141,7 +155,6 @@ def main(cfg: DictConfig):
         logger.info(f"[{epoch+1:02d}/{cfg.train.epochs}] "
                     f"train {tr_acc:.3%}/{tr_loss:.4f} | "
                     f"val {vl_acc:.3%}/{vl_loss:.4f}")
-
 
         if vl_acc > best_acc:
             best_acc = vl_acc
@@ -179,4 +192,3 @@ def main(cfg: DictConfig):
 
 if __name__ == "__main__":
     main()
-
