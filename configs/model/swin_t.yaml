@@ -1,5 +1,5 @@
 name: swin_t
 batch_size: 110
 _target_: models.swin_t.swin_t
-  #lr: 2.10e-05
-  #weight_decay: 0.00037
+lr: 2.09e-05
+weight_decay: 5.34e-05  

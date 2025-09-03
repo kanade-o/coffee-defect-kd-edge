@@ -1,0 +1,62 @@
+[2025-09-03 07:25:40,359][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-09-03 07:25:40,359][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/swin_b/base/2025-09-03_07-25-40
+[2025-09-03 07:25:40,359][root][INFO] - batch: 47, 
+ {'batch_size': 47, '_target_': 'models.swin_b.swin_b'}
+[2025-09-03 07:25:40,359][root][INFO] - Start loading train data
+[2025-09-03 07:25:40,469][root][INFO] - Start loading val data
+[2025-09-03 07:25:40,481][root][INFO] - Start loading test data
+[2025-09-03 07:25:40,495][root][INFO] - Finished DataLoader setup
+[2025-09-03 07:25:40,495][root][INFO] - Starting Optimize
+[2025-09-03 07:25:42,779][root][INFO] - starting train
+[2025-09-03 07:25:42,779][root][INFO] - epoch: 0
+[2025-09-03 07:45:28,152][root][INFO] - epoch: 1
+[2025-09-03 08:05:25,272][root][INFO] - epoch: 2
+[2025-09-03 08:25:20,967][root][INFO] - epoch: 3
+[2025-09-03 08:45:17,925][root][INFO] - epoch: 4
+[2025-09-03 09:05:12,604][root][INFO] - epoch: 5
+[2025-09-03 09:25:10,057][root][INFO] - epoch: 6
+[2025-09-03 09:45:02,221][root][INFO] - epoch: 7
+[2025-09-03 10:04:54,688][root][INFO] - epoch: 8
+[2025-09-03 10:24:50,583][root][INFO] - epoch: 9
+[2025-09-03 10:44:44,901][root][INFO] - epoch: 10
+[2025-09-03 11:04:42,285][root][INFO] - epoch: 11
+[2025-09-03 11:24:36,012][root][INFO] - epoch: 12
+[2025-09-03 11:44:30,558][root][INFO] - epoch: 13
+[2025-09-03 12:04:26,783][root][INFO] - epoch: 14
+[2025-09-03 12:24:19,831][root][INFO] - epoch: 15
+[2025-09-03 12:44:14,495][root][INFO] - epoch: 16
+[2025-09-03 13:04:08,510][root][INFO] - epoch: 17
+[2025-09-03 13:24:06,007][root][INFO] - epoch: 18
+[2025-09-03 13:43:59,627][root][INFO] - epoch: 19
+[2025-09-03 14:03:53,998][root][INFO] - finished train
+[2025-09-03 14:03:53,999][root][INFO] - starting eval
+[2025-09-03 14:04:49,988][root][INFO] - finished eval
+[2025-09-03 14:04:51,696][root][INFO] - starting train
+[2025-09-03 14:04:51,696][root][INFO] - epoch: 0
+[2025-09-03 14:24:50,002][root][INFO] - epoch: 1
+[2025-09-03 14:44:46,612][root][INFO] - epoch: 2
+[2025-09-03 15:04:40,189][root][INFO] - epoch: 3
+[2025-09-03 15:24:37,030][root][INFO] - epoch: 4
+[2025-09-03 15:44:36,594][root][INFO] - epoch: 5
+[2025-09-03 16:04:33,096][root][INFO] - epoch: 6
+[2025-09-03 16:24:25,536][root][INFO] - epoch: 7
+[2025-09-03 16:44:17,505][root][INFO] - epoch: 8
+[2025-09-03 17:04:11,889][root][INFO] - epoch: 9
+[2025-09-03 17:24:04,044][root][INFO] - epoch: 10
+[2025-09-03 17:43:55,199][root][INFO] - epoch: 11
+[2025-09-03 18:03:44,908][root][INFO] - epoch: 12
+[2025-09-03 18:23:39,792][root][INFO] - epoch: 13
+[2025-09-03 18:43:31,651][root][INFO] - epoch: 14
+[2025-09-03 19:03:23,596][root][INFO] - epoch: 15
+[2025-09-03 19:23:16,804][root][INFO] - epoch: 16
+[2025-09-03 19:43:08,772][root][INFO] - epoch: 17
+[2025-09-03 20:02:58,736][root][INFO] - epoch: 18
+[2025-09-03 20:22:52,665][root][INFO] - epoch: 19
+[2025-09-03 20:42:42,825][root][INFO] - finished train
+[2025-09-03 20:42:42,826][root][INFO] - starting eval
+[2025-09-03 20:43:38,754][root][INFO] - finished eval
+[2025-09-03 20:43:40,450][root][INFO] - starting train
+[2025-09-03 20:43:40,451][root][INFO] - epoch: 0
+[2025-09-03 21:03:35,956][root][INFO] - epoch: 1
+[2025-09-03 21:23:31,823][root][INFO] - epoch: 2
+[2025-09-03 21:43:22,918][root][INFO] - epoch: 3

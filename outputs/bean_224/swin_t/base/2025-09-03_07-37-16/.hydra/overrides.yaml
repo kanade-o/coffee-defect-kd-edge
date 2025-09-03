@@ -1,0 +1,2 @@
+- model=swin_t
+- gpu=8
