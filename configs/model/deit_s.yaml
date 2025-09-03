@@ -1,5 +1,5 @@
 name: deit_s
-batch_size: 195
+batch_size: 185
 _target_: models.deit_s.deit_s
 lr: 2.10e-05
 weight_decay: 0.0018

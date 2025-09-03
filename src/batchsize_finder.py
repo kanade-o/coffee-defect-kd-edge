@@ -121,17 +121,20 @@ if __name__ == "__main__":
     confd = HOMED + "configs/model/"
 
     model_cfgs = {
-        "resnet18": confd + "resnet18.yaml",
-        "resnet50": confd + "resnet50.yaml",
-        "deit_b":   confd + "deit_b.yaml",
-        "deit_bd":   confd + "deit_bd.yaml",
-        "deit_small":   confd + "deit_small_patch16_224.yaml",
-        "CNN224":   confd + "cnn224.yaml",
-        "efficientnet": confd + "efficientnetb0.yaml",
-        "vit": confd + "vit.yaml",
-        "vit_3rd": confd + "vit_3rd.yaml",
-        "vit_two": confd + "vit_two.yaml",
-        "vit_b16": confd + "vit_b16.yaml",
+#        "resnet18": confd + "resnet18.yaml",
+#        "resnet50": confd + "resnet50.yaml",
+#        "deit_b":   confd + "deit_b.yaml",
+#        "deit_bd":   confd + "deit_bd.yaml",
+#        "deit_small":   confd + "deit_small_patch16_224.yaml",
+#        "CNN224":   confd + "cnn224.yaml",
+#        "efficientnet": confd + "efficientnetb0.yaml",
+#        "vit": confd + "vit.yaml",
+#        "vit_3rd": confd + "vit_3rd.yaml",
+#        "vit_two": confd + "vit_two.yaml",
+#        "vit_b16": confd + "vit_b16.yaml",
+        "swin_b": confd + "swin_b.yaml",
+        "swin_s": confd + "swin_s.yaml",
+        "swin_t": confd + "swin_t.yaml",
     }
 
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

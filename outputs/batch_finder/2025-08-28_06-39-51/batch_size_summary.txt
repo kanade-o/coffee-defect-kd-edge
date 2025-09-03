@@ -1,0 +1,3 @@
+swin_b: 47
+swin_s: 66
+swin_t: 110

@@ -1,0 +1,5 @@
+name: swin_s
+batch_size: 66
+_target_: models.swin_s.swin_s
+  #lr: 2.10e-05
+  #weight_decay: 0.00037

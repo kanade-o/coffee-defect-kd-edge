@@ -1,0 +1,9 @@
+2025-08-28 06:39:51,187 INFO START batch_finder at 2025-08-28_06-39-51
+2025-08-28 06:39:51,187 INFO train_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/train, val_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/val, input_size=224, init_bs=80
+2025-08-28 06:39:51,187 INFO --- Processing model: swin_b ---
+2025-08-28 06:40:16,113 INFO swin_b: recommended batch size → 47
+2025-08-28 06:40:16,113 INFO --- Processing model: swin_s ---
+2025-08-28 06:40:36,401 INFO swin_s: recommended batch size → 66
+2025-08-28 06:40:36,401 INFO --- Processing model: swin_t ---
+2025-08-28 06:40:54,467 INFO swin_t: recommended batch size → 110
+2025-08-28 06:40:54,469 INFO Finished all models. Summary written.

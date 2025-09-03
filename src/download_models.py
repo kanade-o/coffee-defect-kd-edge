@@ -33,7 +33,10 @@ if __name__ == "__main__":
         "efficientnet_b0", 
         "deit_base_patch16_224", 
         "deit_base_distilled_patch16_224",
-        "deit_small_patch16_224"
+        "deit_small_patch16_224",
+        "swin_tiny_patch4_window7_224",
+        "swin_small_patch4_window7_224",
+        "swin_base_patch4_window7_224",
     ]
     
     for model in model_list:
