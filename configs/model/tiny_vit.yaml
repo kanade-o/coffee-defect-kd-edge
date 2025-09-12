@@ -1,5 +1,5 @@
 name: tiny_vit
-  #batch_size: 47
+batch_size: 134
 _target_: models.tiny_vit.tiny_vit
   #lr: 1.982e-05
   #weight_decay: 2.216e-05
