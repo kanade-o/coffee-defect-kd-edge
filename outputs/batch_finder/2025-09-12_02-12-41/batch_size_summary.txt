@@ -1,0 +1,2 @@
+mobilenetv2: 86
+tiny_vit: 134

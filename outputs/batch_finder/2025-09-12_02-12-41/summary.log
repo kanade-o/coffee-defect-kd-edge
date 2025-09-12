@@ -1,0 +1,7 @@
+2025-09-12 02:12:42,003 INFO START batch_finder at 2025-09-12_02-12-41
+2025-09-12 02:12:42,003 INFO train_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/train, val_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/val, input_size=224, init_bs=16
+2025-09-12 02:12:42,003 INFO --- Processing model: mobilenetv2 ---
+2025-09-12 02:13:09,366 INFO mobilenetv2: recommended batch size → 86
+2025-09-12 02:13:09,367 INFO --- Processing model: tiny_vit ---
+2025-09-12 02:13:39,794 INFO tiny_vit: recommended batch size → 134
+2025-09-12 02:13:39,794 INFO Finished all models. Summary written.

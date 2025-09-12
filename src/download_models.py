@@ -28,15 +28,17 @@ def download_model(model_name: str) -> None:
 
 if __name__ == "__main__":
     model_list = [
-        "resnet18", 
-        "resnet50", 
-        "efficientnet_b0", 
-        "deit_base_patch16_224", 
-        "deit_base_distilled_patch16_224",
-        "deit_small_patch16_224",
-        "swin_tiny_patch4_window7_224",
-        "swin_small_patch4_window7_224",
-        "swin_base_patch4_window7_224",
+#        "resnet18", 
+#        "resnet50", 
+#        "efficientnet_b0", 
+#        "deit_base_patch16_224", 
+#        "deit_base_distilled_patch16_224",
+#        "deit_small_patch16_224",
+#        "swin_tiny_patch4_window7_224",
+#        "swin_small_patch4_window7_224",
+#        "swin_base_patch4_window7_224",
+        'tiny_vit_5m_224.dist_in22k',
+        'mobilenetv2_120d.ra_in1k'
     ]
     
     for model in model_list:

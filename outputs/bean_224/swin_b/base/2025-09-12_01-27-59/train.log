@@ -1,0 +1,17 @@
+[2025-09-12 01:27:59,318][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-09-12 01:27:59,318][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/swin_b/base/2025-09-12_01-27-59
+[2025-09-12 01:27:59,319][root][INFO] - batch: 47, 
+ {'batch_size': 47, '_target_': 'models.swin_b.swin_b', 'lr': 1.982e-05, 'weight_decay': 2.216e-05}
+[2025-09-12 01:27:59,319][root][INFO] - lr: 1.982e-05, 
+ {'_target_': 'models.swin_b.swin_b', 'lr': 1.982e-05, 'weight_decay': 2.216e-05}
+[2025-09-12 01:27:59,319][root][INFO] - weight_decay: 2.216e-05, 
+ {'_target_': 'models.swin_b.swin_b', 'weight_decay': 2.216e-05}
+[2025-09-12 01:28:01,382][root][INFO] - Start loading train data
+[2025-09-12 01:28:01,489][root][INFO] - Start loading val data
+[2025-09-12 01:28:01,502][root][INFO] - Start loading test data
+[2025-09-12 01:28:01,713][root][INFO] - Finished DataLoader setup
+[2025-09-12 01:28:01,714][root][INFO] - Start: 0
+[2025-09-12 01:48:26,791][root][INFO] - [01/100] train 85.424%/0.3113 | val 95.153%/0.1159
+[2025-09-12 01:48:27,243][root][INFO] - Start: 1
+[2025-09-12 02:09:06,543][root][INFO] - [02/100] train 97.731%/0.0617 | val 96.694%/0.0947
+[2025-09-12 02:09:10,778][root][INFO] - Start: 2

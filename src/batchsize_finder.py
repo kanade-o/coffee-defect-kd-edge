@@ -115,7 +115,7 @@ if __name__ == "__main__":
     train_dir   = HOMED + "data/bean_224/train"
     val_dir     = HOMED + "data/bean_224/val"
     input_size  = 224
-    init_bs     = 80
+    init_bs     = 16
     num_classes = 2
         
     confd = HOMED + "configs/model/"
@@ -132,9 +132,11 @@ if __name__ == "__main__":
 #        "vit_3rd": confd + "vit_3rd.yaml",
 #        "vit_two": confd + "vit_two.yaml",
 #        "vit_b16": confd + "vit_b16.yaml",
-        "swin_b": confd + "swin_b.yaml",
-        "swin_s": confd + "swin_s.yaml",
-        "swin_t": confd + "swin_t.yaml",
+#        "swin_b": confd + "swin_b.yaml",
+#        "swin_s": confd + "swin_s.yaml",
+#        "swin_t": confd + "swin_t.yaml",
+        "mobilenetv2": confd + "mobilenetv2.yaml",
+        "tiny_vit": confd + "tiny_vit.yaml",
     }
 
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

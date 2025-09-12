@@ -1,0 +1,17 @@
+data:
+  name: bean_224
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/val
+  test_dir: /home/sota/research/sotaohnuma/coffee//data/bean_224/test
+  input_size: 224
+train:
+  epochs: 100
+  name: base
+model:
+  name: swin_b
+  batch_size: 47
+  _target_: models.swin_b.swin_b
+  lr: 1.982e-05
+  weight_decay: 2.216e-05
+num_classes: 2
+gpu: 9
