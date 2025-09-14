@@ -1,5 +1,5 @@
 name: mobilenetv2
 batch_size: 86
 _target_: models.mobilenetv2.mobilenetv2
-  #lr: 1.982e-05
-  #weight_decay: 2.216e-05
+lr: 0.0080
+weight_decay: 0.0079
