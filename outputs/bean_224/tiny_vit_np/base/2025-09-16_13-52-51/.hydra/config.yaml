@@ -1,0 +1,17 @@
+data:
+  name: bean_224
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/val
+  test_dir: /home/sota/research/sotaohnuma/coffee//data/bean_224/test
+  input_size: 224
+train:
+  epochs: 100
+  name: base
+model:
+  name: tiny_vit_np
+  batch_size: 134
+  _target_: models.tiny_vit_np.tiny_vit_np
+  lr: 0.0011
+  weight_decay: 0.0016
+num_classes: 2
+gpu: 8

@@ -1,0 +1,5 @@
+name: mobilenetv2_np
+batch_size: 86
+_target_: models.mobilenetv2_np.mobilenetv2_np
+lr: 0.0080
+weight_decay: 0.0079

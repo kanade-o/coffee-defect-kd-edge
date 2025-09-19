@@ -1,0 +1,2 @@
+- model=tiny_vit_np
+- gpu=8

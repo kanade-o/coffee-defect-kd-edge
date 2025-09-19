@@ -1,0 +1,2 @@
+- model=mobilenetv2_np
+- gpu=9
