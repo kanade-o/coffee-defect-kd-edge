@@ -37,8 +37,9 @@ if __name__ == "__main__":
 #        "swin_tiny_patch4_window7_224",
 #        "swin_small_patch4_window7_224",
 #        "swin_base_patch4_window7_224",
-        'tiny_vit_5m_224.dist_in22k',
-        'mobilenetv2_120d.ra_in1k'
+#        'tiny_vit_5m_224.dist_in22k',
+#        'mobilenetv2_120d.ra_in1k'
+        'mobilenetv2_050.lamb_in1k',
     ]
     
     for model in model_list:

@@ -1,0 +1,3 @@
+2025-09-21 09:44:13,737 INFO START batch_finder at 2025-09-21_09-44-13
+2025-09-21 09:44:13,737 INFO train_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/train, val_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/val, input_size=224, init_bs=16
+2025-09-21 09:44:13,737 INFO --- Processing model: mobilenetv2 ---
