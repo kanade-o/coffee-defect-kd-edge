@@ -1,0 +1,28 @@
+gpu: 5
+num_classes: 2
+data:
+  input_size: 224
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/val
+  test_dir: /home/sota/research/sotaohnuma/coffee//data/bean_224/test
+model:
+  _target_: torchvision.models.mobilenet_v2
+  batch_size: 64
+  lr: 0.0003
+  weight_decay: 0.0001
+  num_classes: ${num_classes}
+student_weights_path: null
+teacher:
+  type: timm
+  name: swin_small_patch4_window7_224
+  weights_path: /home/sota/research/sotaohnuma/coffee/src/models/weights/swin_small_finetuned.pth
+  num_classes: ${num_classes}
+kd:
+  teacher_feat: stages.3
+  student_feat: features.13.conv.1
+  T: 4.0
+  alpha: 0.7
+  beta: 1000.0
+  teacher_grid_hw: null
+train:
+  epochs: 20

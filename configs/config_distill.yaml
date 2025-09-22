@@ -1,0 +1,37 @@
+# configs/config_distill.yaml
+gpu: 5
+num_classes: 2
+
+data:
+  input_size: 224
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/val
+  test_dir: /home/sota/research/sotaohnuma/coffee//data/bean_224/test
+
+model:  # student の定義（従来どおり instantiate を使う）
+  #_target_: model.mobilenetv2_050_np.mobilenetv2_050_np
+  _target_: torchvision.models.mobilenet_v2
+  batch_size: 64
+  lr: 3e-4
+  weight_decay: 1e-4
+  num_classes: ${num_classes}
+student_weights_path: #/home/sota/research/weights/mobilenetv2_050_np.pth
+
+teacher:
+  type: timm                      # timm or torchvision
+  name: swin_small_patch4_window7_224
+  weights_path: /home/sota/research/sotaohnuma/coffee/src/models/weights/swin_small_finetuned.pt
+  num_classes: ${num_classes}     # 学習時のクラス数に合わせて
+
+kd:
+  # どの層でATするか（モデルに応じて調整）
+  teacher_feat: layers.3          # Swin/TinyViT は (N,C,H,W) が得られて扱いやすい
+  student_feat: features.13.conv.1   # ResNet系例。MobileNetなら "features.13.conv.1" 等に変更
+  # KL/AT の係数
+  T: 4.0
+  alpha: 0.7      # KL の重み
+  beta: 1000.0    # AT の重み（まずは大きめから）
+  teacher_grid_hw: null  # 純ViTでトークン列→(H,W)にする必要がある場合は [14,14] など
+
+train:
+  epochs: 20

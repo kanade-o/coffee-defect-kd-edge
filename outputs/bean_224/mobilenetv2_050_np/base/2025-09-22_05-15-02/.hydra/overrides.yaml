@@ -1,0 +1,4 @@
+- model=mobilenetv2_050_np
+- model.batch_size=16
+- model.lr=0.0001
+- gpu=6
