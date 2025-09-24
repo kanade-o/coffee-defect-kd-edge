@@ -1,0 +1,3 @@
+- model=cnn_student100
+- gpu=5
+- model.batch_size=128

@@ -10,12 +10,12 @@ data:
 
 model:  # student の定義（従来どおり instantiate を使う）
   #_target_: model.mobilenetv2_050_np.mobilenetv2_050_np
-  _target_: models.cnn_student.cnn_student
-  batch_size: 1360
-  lr: 3e-4
-  weight_decay: 1e-4
+  _target_: models.cnn_224.CNN224
+  batch_size: 128
+  lr: 0.00066
+  weight_decay: 0.00093
   num_classes: ${num_classes}
-student_weights_path: /home/sota/research/sotaohnuma/coffee/src/models/weights/cnn_student.pt
+    #student_weights_path: /home/sota/research/sotaohnuma/coffee/src/models/weights/cnn_student.pt
 
 teacher:
   type: timm                      # timm or torchvision
@@ -26,7 +26,7 @@ teacher:
 kd:
   # どの層でATするか（モデルに応じて調整）
   teacher_feat: layers.3          # Swin/TinyViT は (N,C,H,W) が得られて扱いやすい
-  student_feat: block3
+    #  student_feat: block3
   # KL/AT の係数
   T: 4.0
   alpha: 0.7      # KL の重み

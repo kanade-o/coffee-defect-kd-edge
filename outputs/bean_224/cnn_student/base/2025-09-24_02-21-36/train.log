@@ -1,0 +1,13 @@
+[2025-09-24 02:21:36,421][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-09-24 02:21:36,422][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/cnn_student/base/2025-09-24_02-21-36
+[2025-09-24 02:21:36,422][root][INFO] - batch: 688, 
+ {'_target_': 'models.cnn_student.cnn_student', 'batch_size': 688, 'lr': 0.0001, 'weight_decay': 0.0005}
+[2025-09-24 02:21:36,422][root][INFO] - lr: 0.0001, 
+ {'_target_': 'models.cnn_student.cnn_student', 'lr': 0.0001, 'weight_decay': 0.0005}
+[2025-09-24 02:21:36,422][root][INFO] - weight_decay: 0.0005, 
+ {'_target_': 'models.cnn_student.cnn_student', 'weight_decay': 0.0005}
+[2025-09-24 02:21:36,910][root][INFO] - Start loading train data
+[2025-09-24 02:21:37,031][root][INFO] - Start loading val data
+[2025-09-24 02:21:37,045][root][INFO] - Start loading test data
+[2025-09-24 02:21:37,059][root][INFO] - Finished DataLoader setup
+[2025-09-24 02:21:37,060][root][INFO] - Start: 0

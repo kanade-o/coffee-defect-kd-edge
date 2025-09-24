@@ -1,0 +1,5 @@
+2025-09-24 09:34:20,569 INFO START batch_finder at 2025-09-24_09-34-20
+2025-09-24 09:34:20,569 INFO train_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/train, val_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/val, input_size=224, init_bs=16
+2025-09-24 09:34:20,569 INFO --- Processing model: cnn_student ---
+2025-09-24 09:36:08,700 INFO cnn_student: recommended batch size → 1360
+2025-09-24 09:36:08,701 INFO Finished all models. Summary written.

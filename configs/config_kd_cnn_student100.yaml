@@ -10,12 +10,12 @@ data:
 
 model:  # student の定義（従来どおり instantiate を使う）
   #_target_: model.mobilenetv2_050_np.mobilenetv2_050_np
-  _target_: models.cnn_student.cnn_student
-  batch_size: 1360
-  lr: 3e-4
-  weight_decay: 1e-4
+  _target_: models.cnn_student100.cnn_student100
+  batch_size: 128
+  lr: 0.0020
+  weight_decay: 0.0090
   num_classes: ${num_classes}
-student_weights_path: /home/sota/research/sotaohnuma/coffee/src/models/weights/cnn_student.pt
+  student_weights_path: # /home/sota/research/sotaohnuma/coffee/src/models/weights/cnn_student.pt
 
 teacher:
   type: timm                      # timm or torchvision

@@ -1,0 +1,2 @@
+2025-09-24 01:36:57,362 INFO START batch_finder at 2025-09-24_01-36-57
+2025-09-24 01:36:57,362 INFO train_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/train, val_dir=/home/sota/research/sotaohnuma/coffee/data/bean_224/val, input_size=224, init_bs=16

@@ -1,0 +1,2 @@
+- model=cnn_student
+- gpu=8
