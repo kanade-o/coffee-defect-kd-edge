@@ -137,7 +137,8 @@ if __name__ == "__main__":
 #        "swin_t": confd + "swin_t.yaml",
 #        "mobilenetv2": confd + "mobilenetv2.yaml",
 #        "tiny_vit": confd + "tiny_vit.yaml",
-        "mobilenetv2_050": confd + "mobilenetv2_050_np.yaml",
+#        "mobilenetv2_050": confd + "mobilenetv2_050_np.yaml",
+        "cnn_student": confd 
     }
 
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
