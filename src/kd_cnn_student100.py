@@ -221,14 +221,14 @@ def main(cfg: DictConfig):
     # ---------- Curves ----------
     epochs = range(1, cfg.train.epochs + 1)
     plt.figure(); plt.plot(epochs, tr_losses, label="train"); plt.plot(epochs, vl_losses, label="val")
-    plt.xlabel("epoch"); plt.ylabel("loss"); plt.legend(); plt.title("Loss"); plt.savefig("tmp/loss_curve.png", dpi=150)
+    plt.xlabel("epoch"); plt.ylabel("loss"); plt.legend(); plt.title("Loss"); plt.savefig("loss_curve.png", dpi=150)
 
     plt.figure(); plt.plot(epochs, tr_accs, label="train"); plt.plot(epochs, vl_accs, label="val")
-    plt.xlabel("epoch"); plt.ylabel("accuracy"); plt.legend(); plt.title("Accuracy"); plt.savefig("tmp/accuracy_curve.png", dpi=150)
+    plt.xlabel("epoch"); plt.ylabel("accuracy"); plt.legend(); plt.title("Accuracy"); plt.savefig("accuracy_curve.png", dpi=150)
 
     # ---------- Test ----------
     from utils import evaluate_model, plot_roc_curve, plot_pr_curve
-    student.load_state_dict(torch.load("tmp/best.pt"))
+    student.load_state_dict(torch.load("best.pt"))
     metrics, curves = evaluate_model(student, test_dl, device)
     print("\n[Test Evaluation]")
     for k, v in metrics.items():
