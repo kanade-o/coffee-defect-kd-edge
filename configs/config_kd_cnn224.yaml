@@ -35,3 +35,9 @@ kd:
 
 train:
   epochs: 20
+
+hydra:
+  run:
+    dir: outputs/kd/cnn_224/${now:%Y-%m-%d_%H-%M-%S}
+  job:
+    chdir: true
