@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-class cnn_student(nn.Module):
+class cnn_student050(nn.Module):
     def __init__(self, num_classes=2, **kwargs):
-        super(cnn_student, self).__init__()
+        super(cnn_student050, self).__init__()
         
         # --- ここでモデルの容量（サイズ）を調整します ---
         

@@ -1,0 +1,8 @@
+[2025-09-24 23:34:26,773][root][INFO] - ORIGINAL CWD : /home/sota/research/sotaohnuma/coffee
+[2025-09-24 23:34:26,773][root][INFO] - RUN CWD      : /home/sota/research/sotaohnuma/coffee/outputs/bean_224/cnn_student050/base/2025-09-24_23-34-26
+[2025-09-24 23:34:26,774][root][INFO] - batch: 128, 
+ {'_target_': 'models.cnn_student050.cnn_student050', 'batch_size': 128, 'lr': 0.0034, 'weight_decay': 0.0024}
+[2025-09-24 23:34:26,774][root][INFO] - lr: 0.0034, 
+ {'_target_': 'models.cnn_student050.cnn_student050', 'lr': 0.0034, 'weight_decay': 0.0024}
+[2025-09-24 23:34:26,774][root][INFO] - weight_decay: 0.0024, 
+ {'_target_': 'models.cnn_student050.cnn_student050', 'weight_decay': 0.0024}
