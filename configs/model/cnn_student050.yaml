@@ -1,6 +1,6 @@
 _target_: models.cnn_student050.cnn_student050
   #batch_size: 688
-batch_size: 1360
+batch_size: 128
 name: cnn_student050
-lr: 0.0020
-weight_decay: 0.0090
+lr: 0.0034
+weight_decay: 0.0024
