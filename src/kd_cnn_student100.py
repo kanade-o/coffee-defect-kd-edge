@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from transformers import get_cosine_schedule_with_warmup
 
-os.environ["CUDA_VISIBLE_DEVICES"] = str(7)
+os.environ["CUDA_VISIBLE_DEVICES"] = str(8)
 os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
 logging.basicConfig(filename="train.log", level=logging.INFO,
                     format="%(asctime)s %(levelname)s %(message)s")
@@ -213,6 +213,10 @@ def main(cfg: DictConfig):
         tr_losses.append(tr_loss); tr_accs.append(tr_acc)
         vl_losses.append(vl_loss); vl_accs.append(vl_acc)
         print(f"[{epoch+1:02d}/{cfg.train.epochs}] train {tr_acc:.3%}/{tr_loss:.4f} | val {vl_acc:.3%}/{vl_loss:.4f}")
+        logger.info(f"[{epoch+1:02d}/{cfg.train.epochs}] "
+                    f"train {tr_acc:.3%}/{tr_loss:.4f} | "
+                    f"val {vl_acc:.3%}/{vl_loss:.4f}")
+
 
         if vl_acc > best_acc:
             best_acc = vl_acc
@@ -231,8 +235,10 @@ def main(cfg: DictConfig):
     student.load_state_dict(torch.load("best.pt"))
     metrics, curves = evaluate_model(student, test_dl, device)
     print("\n[Test Evaluation]")
+    logger.info("\n[Test Evaluation]")
     for k, v in metrics.items():
         print(f" {k.capitalize():9}: {v:.3f}")
+        logger.info(f" {k.capitalize():9}: {v:.3f}")
 
     fpr, tpr, _ = curves["roc"];  plot_roc_curve(fpr, tpr, metrics["auc"])
     recall, precision, _ = curves["pr"]; plot_pr_curve(recall, precision)

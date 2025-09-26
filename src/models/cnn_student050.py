@@ -35,6 +35,7 @@ class cnn_student050(nn.Module):
         self.classifier = nn.Sequential(
             nn.AdaptiveAvgPool2d((1, 1)), # 特徴マップのサイズを1x1に変換
             nn.Flatten(),
+            nn.Dropout(p=0.5), # 50%のニューロンを無効化
             nn.Linear(in_features=32, out_features=num_classes)
         )
 

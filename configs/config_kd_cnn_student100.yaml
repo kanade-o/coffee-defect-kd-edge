@@ -34,7 +34,7 @@ kd:
   teacher_grid_hw: null  # 純ViTでトークン列→(H,W)にする必要がある場合は [14,14] など
 
 train:
-  epochs: 50
+  epochs: 100
 
 hydra:
   run:
