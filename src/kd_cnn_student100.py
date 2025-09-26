@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from transformers import get_cosine_schedule_with_warmup
 
-os.environ["CUDA_VISIBLE_DEVICES"] = str(9)
+os.environ["CUDA_VISIBLE_DEVICES"] = str(6)
 os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
 logging.basicConfig(filename="train.log", level=logging.INFO,
                     format="%(asctime)s %(levelname)s %(message)s")
@@ -134,7 +134,7 @@ def run_epoch_distill(student, teacher, t_hook, s_hook, loader, opt, cfg_kd):
 @hydra.main(version_base=None, config_path="../configs", config_name="config_kd_cnn_student100")
 def main(cfg: DictConfig):
     global scheduler
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(6)
+    #os.environ["CUDA_VISIBLE_DEVICES"] = str(6)
 
     print("ORIGINAL CWD :", get_original_cwd())
     print("RUN CWD      :", os.getcwd())

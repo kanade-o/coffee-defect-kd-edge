@@ -1,0 +1,23 @@
+gpu: 9
+num_classes: 2
+data:
+  input_size: 224
+  train_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/train
+  val_dir: /home/sota/research/sotaohnuma/coffee/data/bean_224/val
+  test_dir: /home/sota/research/sotaohnuma/coffee//data/bean_224/test
+model:
+  name: cnn_student100
+  _target_: models.cnn_student100.cnn_student100
+  batch_size: 128
+  lr: 0.0003
+  weight_decay: 0.0001
+  num_classes: ${num_classes}
+  student_weights_path: null
+teacher:
+  weights_path: /home/sota/research/sotaohnuma/coffee/src/models/weights/resnet50_finetuned.pt
+  num_classes: ${num_classes}
+kd:
+  T: 2.0
+  alpha: 0.5
+train:
+  epochs: 50
