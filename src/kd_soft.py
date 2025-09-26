@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from transformers import get_cosine_schedule_with_warmup
 
-os.environ["CUDA_VISIBLE_DEVICES"] = str(9)
+os.environ["CUDA_VISIBLE_DEVICES"] = str(5)
 os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
 logging.basicConfig(filename="train.log", level=logging.INFO,
                     format="%(asctime)s %(levelname)s %(message)s")
@@ -19,13 +19,11 @@ logger = logging.getLogger()
 scheduler = None
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# ========== KD / AT ユーティリティ ==========
-
+# ========== KD（soft-label）ユーティリティ ==========
 def load_local_weights(model: nn.Module, path: str, strict: bool = False):
     if not path or not os.path.exists(path):
         raise FileNotFoundError(f"weight not found: {path}")
     sd = torch.load(path, map_location="cpu")
-    # timm/torchvision どちらでも動くようキーのラップを軽く許容
     if isinstance(sd, dict) and "state_dict" in sd:
         sd = sd["state_dict"]
     missing, unexpected = model.load_state_dict(sd, strict=strict)
@@ -34,94 +32,51 @@ def load_local_weights(model: nn.Module, path: str, strict: bool = False):
     if unexpected:
         logger.info(f"[load] unexpected keys: {unexpected[:8]}{'...' if len(unexpected)>8 else ''}")
 
-class FeatureHook:
-    def __init__(self, module: nn.Module):
-        self.out = None
-        self.h = module.register_forward_hook(self._hook)
-    def _hook(self, m, i, o):
-        self.out = o
-    def close(self):
-        self.h.remove()
-
-def find_module(model: nn.Module, name: str) -> nn.Module:
-    m = model
-    for p in name.split("."):
-        m = m[int(p)] if p.isdigit() else getattr(m, p)
-    return m
-
-def attention_map(fm: torch.Tensor, eps=1e-8):
-    # fm: (N, C, H, W)
-    am = (fm ** 2).sum(dim=1, keepdim=True)
-    norm = am.norm(p=2, dim=(2,3), keepdim=True)
-    return am / (norm + eps)
-
-def at_loss(feat_s, feat_t):
-    # 解像度合わせ（教師基準）
-    if feat_s.shape[-2:] != feat_t.shape[-2:]:
-        feat_s = F.adaptive_avg_pool2d(feat_s, feat_t.shape[-2:])
-    return F.mse_loss(attention_map(feat_s), attention_map(feat_t).detach())
-
-def kd_loss(logits_s, logits_t, T: float):
-    p_t = F.softmax(logits_t / T, dim=1).detach()
+def kd_loss_soft(logits_s: torch.Tensor, logits_t: torch.Tensor, T: float) -> torch.Tensor:
+    """温度付きKL: KL(p_t || p_s)。勾配はstudentのみ。batchmeanで T^2 を掛ける標準形。"""
+    with torch.no_grad():
+        p_t = F.softmax(logits_t / T, dim=1)
     log_p_s = F.log_softmax(logits_s / T, dim=1)
     return F.kl_div(log_p_s, p_t, reduction="batchmean") * (T * T)
 
-def spatialize_tokens(x: torch.Tensor, grid_hw=None):
-    # (N, L, C) -> (N, C, H, W)
-    if x.dim() == 4:
-        return x
-    N, L, C = x.shape
-    if grid_hw is None:
-        s = int(math.sqrt(L))
-        if s * s != L:
-            raise ValueError(f"Token length {L} is not square; set teacher_grid_hw")
-        H = W = s
-    else:
-        H, W = grid_hw
-        assert H * W == L
-    return x.transpose(1, 2).contiguous().view(N, C, H, W)
-
-# ========== 1 epoch（蒸留対応） ==========
-
-def run_epoch_distill(student, teacher, t_hook, s_hook, loader, opt, cfg_kd):
-    """train (opt!=None) / eval (opt=None) を兼ねる"""
+# ========== 1 epoch（soft-label KD のみ） ==========
+def run_epoch_distill(student, teacher, loader, opt, cfg_kd):
+    """train (opt!=None) / eval (opt=None) を兼ねる。soft-label KDのみ。"""
     train_mode = opt is not None
     (student.train() if train_mode else student.eval())
     teacher.eval()
-    total, correct, loss_sum = 0, 0, 0.0
 
+    # 重み係数（未指定なら (1-α)*CE + α*KD）
+    alpha = float(getattr(cfg_kd, "alpha", 0.5))
+    ce_weight = float(getattr(cfg_kd, "ce_weight", 1.0 - alpha))
+    T = float(getattr(cfg_kd, "T", 1.0))
+
+    total, correct, loss_sum = 0, 0, 0.0
     with torch.set_grad_enabled(train_mode):
         for x, y in loader:
             x, y = x.to(device), y.to(device)
 
-            # 教師 forward（勾配なし・固定）
+            # teacher forward（固定）
             with torch.no_grad():
                 logits_t = teacher(x)
 
-            # 生徒 forward
+            # student forward
             if train_mode:
                 opt.zero_grad(set_to_none=True)
             logits_s = student(x)
 
-            # ---- 損失計算 ----
+            # ---- 損失（soft-label KD のみ）----
             ce = F.cross_entropy(logits_s, y)
-            kd = kd_loss(logits_s, logits_t, cfg_kd.T) if cfg_kd.alpha > 0 else torch.tensor(0., device=device)
-
-            f_s = s_hook.out
-            f_t = t_hook.out
-            # ViTがトークン列の場合の救済
-            if f_t.dim() == 3:
-                f_t = spatialize_tokens(f_t, grid_hw=cfg_kd.teacher_grid_hw)
-
-            at = at_loss(f_s, f_t) if cfg_kd.beta > 0 else torch.tensor(0., device=device)
-            loss = ce + cfg_kd.alpha * kd + cfg_kd.beta * at
+            kd = kd_loss_soft(logits_s, logits_t, T) if alpha > 0 else torch.tensor(0., device=device)
+            loss = ce_weight * ce + alpha * kd
 
             if train_mode:
                 loss.backward()
                 opt.step()
-                #if scheduler is not None:
-                #    scheduler.step()
+                if scheduler is not None:
+                    scheduler.step()
 
+            # ---- 監視値 ----
             loss_sum += loss.item() * y.size(0)
             pred = logits_s.argmax(1)
             correct += (pred == y).sum().item()
@@ -130,8 +85,7 @@ def run_epoch_distill(student, teacher, t_hook, s_hook, loader, opt, cfg_kd):
     return loss_sum / total, correct / total
 
 # ========== メイン ==========
-
-@hydra.main(version_base=None, config_path="../configs", config_name="config_kd_cnn_student100")
+@hydra.main(version_base=None, config_path="../configs", config_name="config_kd_soft")
 def main(cfg: DictConfig):
     global scheduler
     os.environ["CUDA_VISIBLE_DEVICES"] = str(6)
@@ -158,7 +112,7 @@ def main(cfg: DictConfig):
                           num_workers=4, pin_memory=True)
 
     # ---------- Models ----------
-    # student は既存の instantiate を活用
+    # student
     model_cfg = OmegaConf.to_container(cfg.model, resolve=True)
     model_cfg.pop("name", None)
     BATCH_SIZE = model_cfg.pop("batch_size")
@@ -166,7 +120,7 @@ def main(cfg: DictConfig):
     WEIGHT_DECAY = model_cfg.pop("weight_decay")
     student = instantiate(model_cfg, num_classes=cfg.num_classes).to(device)
 
-    # teacher は timm / torchvision どちらでもOK（Hydraで name/type を指定）
+    # teacher（timm/torchvision どちらでも）
     teacher_cfg = OmegaConf.to_container(cfg.teacher, resolve=True)
     teacher_name = teacher_cfg.pop("name")
     teacher_type = teacher_cfg.pop("type")  # "timm" or "torchvision"
@@ -181,34 +135,30 @@ def main(cfg: DictConfig):
         teacher = getattr(tvm, teacher_name)(weights=None, num_classes=num_classes_t)
     teacher.to(device)
 
-    # ローカル重みの読み込み（student/teacher 両方）
-    #if cfg.student_weights_path:
-    #    load_local_weights(student, cfg.student_weights_path, strict=False)
+    # 重み読み込み（必要に応じて）
+    # if cfg.student_weights_path:
+    #     load_local_weights(student, cfg.student_weights_path, strict=False)
     if teacher_w:
         load_local_weights(teacher, teacher_w, strict=False)
 
-    # teacher は固定
-    for p in teacher.parameters(): p.requires_grad_(False)
+    # teacherは固定
+    for p in teacher.parameters():
+        p.requires_grad_(False)
     teacher.eval()
 
-    # ---------- Hooks ----------
-    t_mod = find_module(teacher, cfg.kd.teacher_feat)
-    s_mod = find_module(student, cfg.kd.student_feat)
-    t_hook, s_hook = FeatureHook(t_mod), FeatureHook(s_mod)
-
-    # ---------- Optimizer / Loss / Scheduler ----------
+    # ---------- Optimizer / Scheduler ----------
     opt = torch.optim.AdamW(student.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
     total_steps = cfg.train.epochs * len(train_dl)
-    #warmup = int(total_steps * 0.1)
-    #scheduler = get_cosine_schedule_with_warmup(opt, num_warmup_steps=warmup, num_training_steps=total_steps)
+    warmup = int(total_steps * 0.1)
+    scheduler = get_cosine_schedule_with_warmup(opt, num_warmup_steps=warmup, num_training_steps=total_steps)
 
     # ---------- Train Loop ----------
     best_acc = 0.0
     tr_losses, tr_accs, vl_losses, vl_accs = [], [], [], []
     for epoch in range(cfg.train.epochs):
         logger.info(f"Start epoch {epoch+1}")
-        tr_loss, tr_acc = run_epoch_distill(student, teacher, t_hook, s_hook, train_dl, opt, cfg.kd)
-        vl_loss, vl_acc = run_epoch_distill(student, teacher, t_hook, s_hook, val_dl,   None, cfg.kd)
+        tr_loss, tr_acc = run_epoch_distill(student, teacher, train_dl, opt, cfg.kd)
+        vl_loss, vl_acc = run_epoch_distill(student, teacher, val_dl,   None, cfg.kd)
 
         tr_losses.append(tr_loss); tr_accs.append(tr_acc)
         vl_losses.append(vl_loss); vl_accs.append(vl_acc)
@@ -216,7 +166,6 @@ def main(cfg: DictConfig):
         logger.info(f"[{epoch+1:02d}/{cfg.train.epochs}] "
                     f"train {tr_acc:.3%}/{tr_loss:.4f} | "
                     f"val {vl_acc:.3%}/{vl_loss:.4f}")
-
 
         if vl_acc > best_acc:
             best_acc = vl_acc
@@ -242,9 +191,6 @@ def main(cfg: DictConfig):
 
     fpr, tpr, _ = curves["roc"];  plot_roc_curve(fpr, tpr, metrics["auc"])
     recall, precision, _ = curves["pr"]; plot_pr_curve(recall, precision)
-
-    # 後片付け
-    t_hook.close(); s_hook.close()
 
 if __name__ == "__main__":
     main()

@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from transformers import get_cosine_schedule_with_warmup
 
-os.environ["CUDA_VISIBLE_DEVICES"] = str(9)
+os.environ["CUDA_VISIBLE_DEVICES"] = str(8)
 os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
 logging.basicConfig(filename="train.log", level=logging.INFO,
                     format="%(asctime)s %(levelname)s %(message)s")
@@ -119,8 +119,8 @@ def run_epoch_distill(student, teacher, t_hook, s_hook, loader, opt, cfg_kd):
             if train_mode:
                 loss.backward()
                 opt.step()
-                #if scheduler is not None:
-                #    scheduler.step()
+                if scheduler is not None:
+                    scheduler.step()
 
             loss_sum += loss.item() * y.size(0)
             pred = logits_s.argmax(1)
@@ -199,8 +199,8 @@ def main(cfg: DictConfig):
     # ---------- Optimizer / Loss / Scheduler ----------
     opt = torch.optim.AdamW(student.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
     total_steps = cfg.train.epochs * len(train_dl)
-    #warmup = int(total_steps * 0.1)
-    #scheduler = get_cosine_schedule_with_warmup(opt, num_warmup_steps=warmup, num_training_steps=total_steps)
+    warmup = int(total_steps * 0.1)
+    scheduler = get_cosine_schedule_with_warmup(opt, num_warmup_steps=warmup, num_training_steps=total_steps)
 
     # ---------- Train Loop ----------
     best_acc = 0.0
