@@ -6,6 +6,8 @@ hydra.yaml
 /*.log
 *.lg
 tmp*
-*.pt
-*.pth
+src/**/*.pt
+src/**/*.pth
+outputs/**/*.pt
+outputs/**/*.pth
 *.ckpt
