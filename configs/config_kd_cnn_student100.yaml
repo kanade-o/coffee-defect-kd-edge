@@ -12,8 +12,8 @@ model:  # student の定義（従来どおり instantiate を使う）
   #_target_: model.mobilenetv2_050_np.mobilenetv2_050_np
   _target_: models.cnn_student100.cnn_student100
   batch_size: 128
-  lr: 1e-3
-  weight_decay: 1e-5
+  lr: 1e-2
+  weight_decay: 1e-6
   num_classes: ${num_classes}
   student_weights_path: # /home/sota/research/sotaohnuma/coffee/src/models/weights/cnn_student.pt
 
@@ -28,7 +28,7 @@ kd:
   teacher_feat: layers.3          # Swin/TinyViT は (N,C,H,W) が得られて扱いやすい
   student_feat: block3
   # KL/AT の係数
-  T: 4.0
+  T: 2.0
   alpha: 0.7      # KL の重み
   beta: 1000.0    # AT の重み（まずは大きめから）
   teacher_grid_hw: null  # 純ViTでトークン列→(H,W)にする必要がある場合は [14,14] など

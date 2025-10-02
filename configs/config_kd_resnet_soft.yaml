@@ -13,8 +13,8 @@ model:  # student の定義（従来どおり instantiate を使う）
   #_target_: model.mobilenetv2_050_np.mobilenetv2_050_np
   _target_: models.cnn_student100.cnn_student100
   batch_size: 128
-  lr: 1e-3
-  weight_decay: 1e-5
+  lr: 1e-2
+  weight_decay: 1e-6
   num_classes: ${num_classes}
   student_weights_path: # /home/sota/research/sotaohnuma/coffee/src/models/weights/cnn_student.pt
 
@@ -31,6 +31,6 @@ train:
 
 hydra:
   run:
-    dir: outputs/kd/resnet/${now:%Y-%m-%d_%H-%M-%S}
+    dir: outputs/kd/resnet/soft/${now:%Y-%m-%d_%H-%M-%S}
   job:
     chdir: true
