@@ -10,4 +10,5 @@ src/**/*.pt
 src/**/*.pth
 outputs/**/*.pt
 outputs/**/*.pth
+eval/*.pt
 *.ckpt
