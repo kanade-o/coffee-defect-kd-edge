@@ -1,8 +1,9 @@
 \documentclass{jpreprint}
 % \usepackage[fleqn]{amsmath}
 \usepackage{float}
+\usepackage{adjustbox}
 % \usepackage{bmpsize}
-\jtitle{深層学習と知識蒸留を用いた\\エッジデバイス上でのコーヒー生豆欠点豆検出システム}
+\jtitle{深層学習と知識蒸留を用いた\\エッジコンピュータ向けコーヒー生豆欠陥検出システムの構築}
 \title{Defect Detection System for Green Coffee Beans on Edge Devices\\ Using Deep Learning and Knowledge Distillation}
 \jauthor{大沼 奏太}
 \author{Sota Onuma}
@@ -14,10 +15,10 @@
 This study presents an edge-oriented defect detection system that applies knowledge distillation from high-capacity deep learning teacher models to a lightweight student model. 
 Using an original dataset of 72,000 images, the distilled student outperforms the standalone student in all classification metrics while maintaining real-time inference (about 9 ms per image) on a Raspberry Pi 5. 
 These results show that knowledge distillation enables the construction of a lightweight, fast, and high-performance defect detection model on edge devices.}
+\keyword{Green Coffee Beans}
 \keyword{Defect Detection}
 \keyword{Knowledge Distillation}
 \keyword{Edge Computing}
-\keyword{Coffee Beans}
 \begin{document}
 \maketitle
 
@@ -28,28 +29,29 @@ These results show that knowledge distillation enables the construction of a lig
 現在主流の選別作業は, 人手による目視で欠点豆を取り除く方法であり, 生産地や自家焙煎を行う店舗で広く用いられている. 
 しかし, この手動選別は労働集約的で時間がかかるうえ, 作業者ごとに判断にばらつきが生じ, 一貫性や正確性に課題がある~\cite{1}. 
 
-こうした課題に対し, CNNを用いた画像分類モデルや, Raspberry Pi上での欠点豆識別など, 深層学習とエッジデバイスを用いた自動検査・選別に関する研究が報告されている~\cite{1}~\cite{2}~\cite{3}. 
+こうした課題に対し, CNNを用いた画像分類モデルや, Raspberry Pi上での欠点豆識別など, 深層学習とエッジコンピュータを用いた自動検査・選別に関する研究が報告されている~\cite{1}~\cite{2}. 
 また, 知識蒸留を利用して, 大規模CNNモデルの知識を軽量モデルへ転移し, 性能をある程度維持しつつモデルサイズやメモリ使用量を削減する手法も提案されている~\cite{4}. 
 一方で, コーヒー生豆欠陥検出というタスクにおいて, どのモデルを教師とするのが最適か, また教師と生徒の組み合わせによって知識蒸留の効果がどのように変化するかは十分に検討されていない. 
-さらに, 推論速度やCPU・メモリ使用率といったエッジデバイス上での実用性評価も限定的である. 
+さらに, 推論速度やCPU・メモリ使用率といったエッジ上での実用性評価も限定的である. 
 
-本研究の目的は, 深層学習と知識蒸留を活用して, コーヒー生豆の欠陥を高速かつ高性能に検出できるエッジデバイス向けの欠陥検出システムを構築し, その際の教師モデル・生徒モデルのアーキテクチャの違いが性能と実用性に与える影響を明らかにすることである. 
+本研究の目的は, 深層学習と知識蒸留を活用して, コーヒー生豆の欠陥を高速かつ高性能に検出できるエッジコンピュータ向けの欠陥検出システムを構築し, その際の教師モデル・生徒モデルのアーキテクチャの違いが性能と実用性に与える影響を明らかにすることである. 
 そのために, まずCNNベースとTransformerベースの最先端モデルを比較し, 最も有効な教師モデルを特定する. 
 次に, その教師モデルから軽量なCNN生徒モデルへ知識蒸留を行い, 分類性能に加え, 推論速度やCPU・メモリ使用量といった実用性の観点から評価を行う. 
 
 \begin{table*}[ht]
-  \centering
   \caption{生徒モデルおよび知識蒸留後モデルの分類性能}
   \label{tab:kd_results}
+  \begin{adjustbox}{center}
   \begin{tabular}{lccccccc}
     \hline
-    Model & Accuracy & Precision & Recall & F1-score & AVG-Latency(ms) & CPU Usage(\%) & Memory Usage(\%) \\
+    Model & Accuracy & Precision & Recall & F1-Score & \begin{tabular}{c} AVG-Latency\\(ms)  \end{tabular} & \begin{tabular}{c} CPU Usage\\(\%)  \end{tabular} & \begin{tabular}{c} Memory Usage\\(\%)  \end{tabular} \\
     \hline
-    生徒モデル（単体） & 0.928 & 0.945 & 0.910 & 0.927 & 9.05& 96.50 & 3.16\\
-    ResNet-50 蒸留モデル & 0.907 & 0.926 & 0.885 & 0.905 & 8.80 & 97.00 & 3.16\\
-    Swin-Small 蒸留モデル & 0.945 & 0.947 & 0.943 & 0.945 & 9.01& 96.75 & 3.16\\
+    生徒（単体） & 0.928 & 0.945 & 0.910 & 0.927 & 9.05& 96.50 & 3.16\\
+    ResNet-50 蒸留 & 0.907 & 0.926 & 0.885 & 0.905 & 8.80 & 97.00 & 3.16\\
+    Swin-Small 蒸留 & 0.945 & 0.947 & 0.943 & 0.945 & 9.01& 96.75 & 3.16\\
     \hline
   \end{tabular}
+  \end{adjustbox}
 \end{table*}
 
 \section{提案手法について}
@@ -58,7 +60,7 @@ These results show that knowledge distillation enables the construction of a lig
   これにより, 生徒モデルはパラメータ数や計算量を抑えつつ, 教師モデルに近い識別性能を獲得することが期待される. 
 
   まず, CNNベースとTransformerベースから複数の最先端モデルを教師候補として比較し, RecallとF1-scoreを重視して評価することで, 欠点豆の見逃しを抑えることを重視した教師モデル選択を行った. 
-  これらの教師モデルに対し, Raspberry Pi 5などのエッジデバイス上での動作を想定した軽量なカスタムCNNを生徒モデルとして設計し, それぞれから生徒モデルへの知識蒸留を行った. 
+  これらの教師モデルに対し, Raspberry Pi 5などのエッジコンピュータ上での動作を想定した軽量なカスタムCNNを生徒モデルとして設計し, それぞれから生徒モデルへの知識蒸留を行った. 
 
   \begin{figurehere}%[htb] 
     \centering 
@@ -73,7 +75,7 @@ These results show that knowledge distillation enables the construction of a lig
 まず, 人手によってラベル付けした良豆1,000枚と, 欠け・奇形・カビなど確実に欠点豆と判断できる欠点豆1,000枚を取得し, 合計2,000枚の元画像を用意した. 
 画像サイズは224x224ピクセルに統一し, タスクは良豆と欠点豆の2値分類とした. 
 また, モデルの汎化性能を高めるため, これらの元画像に対して40度ごとの回転および上下左右の反転によるデータ拡張を行った. 
-その結果, 良豆・欠陥豆それぞれ36,000枚, 合計72,000枚からなるデータセットを構築した. 
+その結果, 良豆・欠陥豆それぞれ36,000枚, 合計72,000枚からなるデータセットを構築できた. 
 
 \section{結果と考察}
 まず, 教師候補モデルとして, CNNベースとTransformerベースモデルの最先端モデルをそれぞれ比較した.  
@@ -87,15 +89,19 @@ ResNet-50を教師とした場合, 知識蒸留後の生徒モデルは, 生徒�
 以上の結果から, 本研究ではTransformerベースのSwin-Smallを教師モデルとすることで, 知識蒸留により軽量な生徒モデルが元の生徒モデルを上回る性能を達成できたことが分かる.  
 これは, 教師モデルのアーキテクチャ選択が知識蒸留の効果に大きく影響することを示唆している.  
 
-さらに, エッジデバイス上での実用度の評価として, Raspberry Pi 5上で各モデルの推論性能を測定した.  
+さらに, エッジコンピュータ上での実用度の評価として, Raspberry Pi 5上で各モデルの推論性能を測定した.  
 その結果, Swin-Smallおよび ResNet-50といった教師モデルは, 平均推論時間がそれぞれ364.7ms(約2.7FPS), 226.6ms(約4.4FPS)と長く, リアルタイム処理には不適であった.  
-一方, 軽量な生徒モデルは平均9ms程度(約110FPS)と高速であり, エッジデバイス上でも十分なリアルタイム性を有していた.  
+一方, 軽量な生徒モデルは平均9ms程度(約110FPS)と高速であり, エッジコンピュータ上でも十分なリアルタイム性を有していた.  
 知識蒸留を適用した生徒モデルは, 精度向上を維持しつつ推論時間にほとんど影響を与えず, 生徒モデル単体と同等の高速性を示した.  
-以上より, 知識蒸留を用いた軽量モデルは, エッジデバイス上でのリアルタイム欠陥検出に有効であるといえる.  
+以上より, 知識蒸留を用いた軽量モデルは, エッジコンピュータ上でのリアルタイム欠陥検出に有効であるといえる.  
 
 \section{終わりに}
-本研究では, コーヒー生豆の欠点豆検出を対象として, 深層学習と知識蒸留を組み合わせたエッジデバイス向け欠陥検出システムの構築を行った. 
-その結果, 独自に構築したデータセットに対して高い分類性能を示すことができた.  
+本研究では, コーヒー生豆の欠陥検出を対象として, 深層学習と知識蒸留を用いたエッジコンピュータ向け欠陥検出システムの構築を行った. 
+その結果, 独自に構築したデータセットに対して高い分類性能を示すことができた.
+
+今後の課題としては, まず, さらなる汎化性能の向上を目指して, 画像の追加収集によるデータ量を増加をさせる. 
+また, 欠陥クラスを細分化した多クラス分類へ拡張することで, より厳しいタスクでの評価が可能になると考えられる. 
+さらに, 教師モデルの中間層特徴を利用する知識蒸留手法を導入することで, 表現能力の高い特徴を軽量な生徒モデルへ効果的に転移し, より困難なタスクにおいても高性能を維持できるシステムの構築を目指す.
 
 {\small
 \bibliography{bio.bib} %hoge. bibの名前
