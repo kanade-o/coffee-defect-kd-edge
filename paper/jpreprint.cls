@@ -56,8 +56,7 @@
     \hbox to \textwidth{\vtop{\hsize=\textwidth\centering{\fontsize{14pt}{14pt}\selectfont\@jtitle}}} %{18pt}{24pt}
     \vskip 8pt
     \noindent
-    \hbox to \textwidth{\hss 釧路高専専攻科~~\@jcourse\iflab~~\@jlab 研究
-      室\fi~~\@jauthor\hss}
+    \hbox to \textwidth{\hss 釧路高専専攻科~~\@jcourse\iflab~~\@jlab \fi~~\@jauthor\hss}
     \ifabstract
     \vskip 8pt
     \noindent
