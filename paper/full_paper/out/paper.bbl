@@ -1,4 +1,29 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{pinto2017classification}
+Carlito Pinto, Junya Furukawa, Hidekazu Fukai, and Satoshi Tamura.
+\newblock Classification of green coffee bean images based on defect types using convolutional neural network (cnn).
+\newblock pages 1--5, 2017.
+
+\bibitem{huang2020smart}
+Nen-Fu Huang, Dong-Lin Chou, Chia-An Lee, Feng-Ping Wu, An-Chi Chuang, Yi-Hsien Chen, and YinChun Tsai.
+\newblock Smart agriculture: real-time classification of green coffee beans by using a convolutional neural network.
+\newblock {\em IET Smart Cities}, 2(4):167--172, 2020.
+
+\bibitem{wang2021deep}
+Ping Wang, Hsien-Wei Tseng, Tzu-Ching Chen, and Chih-Hsien Hsia.
+\newblock Deep convolutional neural network for coffee bean inspection.
+\newblock {\em Sensors and Materials}, 33:2299, 07 2021.
+
+\bibitem{fukai2018classification}
+Hidekazu Fukai, Junya Furukawa, Hiroki Katsuragawa, Carlito Pinto, and Carmelita Afonso.
+\newblock Classification of green coffee beans by convolutional neural network and its implementation on raspberry pi and camera module.
+\newblock 2018.
+
+\bibitem{hinton2015distilling}
+Geoffrey Hinton, Oriol Vinyals, and Jeff Dean.
+\newblock Distilling the knowledge in a neural network.
+\newblock {\em arXiv preprint arXiv:1503.02531}, 2015.
 
 \bibitem{he2016deep}
 Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
@@ -24,10 +49,5 @@ Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn, Xiaohua
 Ze~Liu, Yutong Lin, Yue Cao, Han Hu, Yixuan Wei, Zheng Zhang, Stephen Lin, and Baining Guo.
 \newblock Swin transformer: Hierarchical vision transformer using shifted windows.
 \newblock In {\em Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)}, pages 10012--10022, 2021.
-
-\bibitem{hinton2015distilling}
-Geoffrey Hinton, Oriol Vinyals, and Jeff Dean.
-\newblock Distilling the knowledge in a neural network.
-\newblock {\em arXiv preprint arXiv:1503.02531}, 2015.
 
 \end{thebibliography}
