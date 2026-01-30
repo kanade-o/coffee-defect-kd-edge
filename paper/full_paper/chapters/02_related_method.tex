@@ -26,7 +26,7 @@ CNNは畳み込み層, プーリング層, 全結合層から構成され, 画�
 
 \subsection{ResNetとは}
 
-ResNet(Residual Network)は, Heらによって2015年に提案された深層CNNアーキテクチャである\cite{he2016deep}. 
+ResNet(Residual Network)は, Heらによって2015年に提案された深層CNNアーキテクチャである~\cite{he2016deep}. 
 従来の深いネットワークでは, 層を増やすほど学習が困難になる勾配消失問題が生じていた.
 
 ResNetでは, 残差接続(Skip Connection)と呼ばれる構造を導入し, 入力をそのまま出力に加算することで, この問題を解決した. 
@@ -35,7 +35,7 @@ ResNetは現在でも多くの画像認識タスクにおいて基盤モデル�
 
 \subsection{EfficientNetとは}
 
-EfficientNetは, Tanらによって2019年に提案されたCNNアーキテクチャである\cite{tan2019efficientnet}. 
+EfficientNetは, Tanらによって2019年に提案されたCNNアーキテクチャである~\cite{tan2019efficientnet}. 
 従来のモデルでは, 精度向上のためにネットワークの深さ, 幅, 入力解像度を個別に拡張していたが, EfficientNetではこれらを統合的にスケーリングする手法を提案した.
 
 この複合スケーリング手法により, 少ないパラメータ数で高い精度を達成できる. 
@@ -45,7 +45,7 @@ EfficientNetは, 計算資源に制約のある環境においても効率的に
 
 \subsection{Transformerとは}
 
-Transformerは, Vaswaniらによって2017年に提案されたニューラルネットワークアーキテクチャである\cite{vaswani2017attention}. 
+Transformerは, Vaswaniらによって2017年に提案されたニューラルネットワークアーキテクチャである~\cite{vaswani2017attention}. 
 当初は自然言語処理のために開発されたが, 近年では画像認識分野にも応用されている.
 
 Transformerの中核をなすのは自己注意機構(Self-Attention)である. 
@@ -54,15 +54,23 @@ Transformerの中核をなすのは自己注意機構(Self-Attention)である.
 
 \subsection{Vision Transformerとは}
 
-Vision Transformer(ViT)は, Dosovitskiyらによって2020年に提案された画像認識モデルである\cite{dosovitskiy2021image}. 
+Vision Transformer(ViT)は, Dosovitskiyらによって2020年に提案された画像認識モデルである~\cite{dosovitskiy2021image}. 
 ViTでは, 入力画像を小さなパッチに分割し, 各パッチを系列データとしてTransformerに入力する.
 
 ViTは大規模なデータセットで事前学習することにより, CNNに匹敵あるいはそれを上回る認識精度を達成する. 
 画像全体の大域的な関係性を捉えられる点がViTの特長であり, 複雑なパターンの認識に有効である.
 
+\subsection{Data-efficient image Transformersとは}
+Data-efficient image Transformers(DeiT)は, Touvronらによって2021年に提案されたViTの改良版である~\cite{touvron2021deit}.
+ViTが高い性能を発揮するには数億枚規模の大規模データセットでの事前学習が必要であったのに対し, DeiTはImageNet-1Kのような比較的小規模なデータセットでも効率的に学習できる.
+
+DeiTの主要な技術は, 蒸留トークンを用いた知識蒸留である. 
+通常のクラストークンに加えて蒸留トークンを導入し, 教師モデルの出力を直接学習する. 
+これにより, データ効率性を大幅に向上させながら, CNNベースの教師モデルから有用な帰納バイアスを獲得することが可能となる.
+
 \subsection{Swin Transformerとは}
 
-Swin Transformerは, Liuらによって2021年に提案されたViTの改良版である\cite{liu2021swin}. 
+Swin Transformerは, Liuらによって2021年に提案されたViTの改良版である~\cite{liu2021swin}. 
 ViTでは全パッチ間で注意計算を行うため計算コストが高いという課題があった.
 
 Swin Transformerでは, 画像をウィンドウに分割し, ウィンドウ内でのみ注意計算を行う. 
@@ -73,7 +81,7 @@ Swin Transformerでは, 画像をウィンドウに分割し, ウィンドウ内
 
 \subsection{知識蒸留とは}
 
-知識蒸留(Knowledge Distillation)は, Hintonらによって提案されたモデル圧縮手法である\cite{hinton2015distilling}. 
+知識蒸留(Knowledge Distillation)は, Hintonらによって提案されたモデル圧縮手法である~\cite{hinton2015distilling}. 
 大規模で高性能な教師モデル(Teacher Model)の知識を, 小規模な生徒モデル(Student Model)に転移させることを目的とする.
 
 教師モデルの出力は, 単なる正解ラベルよりも豊富な情報を含んでいる. 
