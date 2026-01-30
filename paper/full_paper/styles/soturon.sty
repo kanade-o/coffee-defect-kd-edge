@@ -24,10 +24,10 @@
 
 % 変数初期化
 \def\@titlename{
-	\def\@heisei{\year} \advance\@heisei-1988 \ifnum \month<4 \advance\@heisei-1 \fi
-	平成\ 
-		\ifnum \@heisei=1 元
-		\else             \number\@heisei
+	\def\@reiwa{\year} \advance\@reiwa-2018 \ifnum \month<4 \advance\@reiwa-1 \fi
+	令和\ 
+		\ifnum \@reiwa=1 元
+		\else             \number\@reiwa
 		\fi
 	\ 年度\ 卒業論文
 }
