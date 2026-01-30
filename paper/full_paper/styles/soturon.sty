@@ -1,0 +1,161 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          %
+% 専攻論文スタイルファイル %
+%                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ノンブル、柱のスタイル
+\pagestyle{plain}
+\setcounter{page}{0}
+
+% マージン設定
+\setlength{\oddsidemargin}{4.6mm}   % 奇数ページの左余白
+\setlength{\evensidemargin}{4.6mm}  % 偶数ページの左余白
+\setlength{\topmargin}{1.3cm}       % ページの上余白
+
+% ページ設定
+\renewcommand{\baselinestretch}{1.1}      % 改行幅の倍率
+\setlength{\textheight}{32\baselineskip}  % 本文の高さ
+\setlength{\textwidth}{15cm}    % 本文の幅
+\setlength{\headsep}{50pt}      % 本文とヘッダ領域の間隔
+\setlength{\footskip}{100pt}    % 本文とフッタ領域の間隔
+\setlength{\parindent}{1zw}     % 段落の頭の字下げ
+\setlength{\parskip}{2.5pt}     % 段落間の空き
+
+% 変数初期化
+\def\@titlename{
+	\def\@heisei{\year} \advance\@heisei-1988 \ifnum \month<4 \advance\@heisei-1 \fi
+	平成\ 
+		\ifnum \@heisei=1 元
+		\else             \number\@heisei
+		\fi
+	\ 年度\ 卒業論文
+}
+\def\@univname{釧路工業高等専門学校}
+\def\@deptname{情報工学科}
+\def\@date{\number\year\ 年\ \number\month\ 月}
+
+% \maketitle再定義
+\def\maketitle{
+	\begin{titlepage}
+		\let\footnotesize\small
+		\let\footnoterule\relax
+		\null
+		\vfill
+		\begin{center}
+			\includegraphics[width=2.5cm]{kosyo.eps}\\
+			\vspace{1cm}
+			{\large\@titlename}
+			\\ \vskip 20\p@ 
+			{\Large \@title}
+			\\ \vskip 15em
+			{\large \@univname}
+			\\ \vskip .75em
+			{\large \@deptname}
+			\\ \vskip 1em
+			{\Large \@author}
+			\\ \vskip 1em
+			{\large \@date}
+		\end{center}
+		\vfill
+	\end{titlepage}
+}
+
+% \chapter再定義
+\def\chapter{
+	\if @openright \cleardoublepage
+	\else          \clearpage
+	\fi
+	\thispagestyle{plain}
+	\global\@topnum\z@
+	\@afterindenttrue
+	\secdef\@chapter\@schapter
+}
+
+% 章のヘッダ
+\def\@makechapterhead#1{
+ \hbox{}
+ \vskip2\Cvs
+ {
+  \parindent\z@
+  \raggedright
+  \reset@font\huge\bfseries
+  \ifnum \c@secnumdepth >\m@ne
+  \setlength\@tempdima{\linewidth}
+  \setbox\z@\hbox{\@chapapp\thechapter\@chappos\hskip1zw}
+  \hrule height1pt
+  \vskip.3\baselineskip
+  \hrule height3pt
+  \vskip1\baselineskip
+  \unhbox\z@\par
+  \vtop{\hsize\@tempdima#1}
+  \vskip1\baselineskip
+  \hrule height3pt
+  \vskip.3\baselineskip
+  \hrule height1pt
+   \fi
+  }
+  \vskip3\Cvs
+}
+
+
+% 図、表のキャプション
+\def\fnum@figure{\figurename\thefigure}
+\def\fnum@table{\tablename\thetable}
+
+\long\def\@makecaption#1#2{
+	\vskip\abovecaptionskip
+	\iftdir　\sbox\@tempboxa{#1\hskip1zw#2}
+	\else    \sbox\@tempboxa{#1 #2}
+	\fi
+	\ifdim \wd\@tempboxa>\hsize
+		\iftdir #1\hskip1zw#2\relax\par
+		\else   #1 #2\relax\par
+		\fi
+	\else
+		\global \@minipagefalse
+		\hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+	\vskip\belowcaptionskip
+}
+
+%参考文献再定義
+\renewenvironment{thebibliography}[1]
+	{
+		\newcommand{\refname}{参考文献}
+		\chapter*{\refname}
+		\addcontentsline{toc}{chapter}{\refname}
+		\list{\@biblabel{\@arabic\c@enumi}}
+		{
+			\settowidth\labelwidth{\@biblabel{#1}}
+			\leftmargin\labelwidth \advance\leftmargin\labelsep
+			\@openbib@code
+			\usecounter{enumi}
+			\let\p@enumiv\@empty
+			\renewcommand\theenumi{\@arabic\c@enumi}
+		}
+		\sloppy
+		\clubpenalty4000
+		\@clubpenalty\clubpenalty
+		\widowpenalty4000
+		\sfcode`\.\@m
+	}
+	{\def\@noitemerr{\@latex@warning{Empty `thebibliography' environment}}\endlist}
+
+% 著者の発表原稿
+\newenvironment{研究業績}[1]
+	{
+		\newcommand{\recname}{著者の発表原稿}
+		\chapter*{\recname}
+		\addcontentsline{toc}{chapter}{\recname}
+		\list{[\arabic{enumi}]}
+		{
+			\settowidth\labelwidth{[#1]}
+			\leftmargin\labelwidth \advance\leftmargin\labelsep
+			\usecounter{enumi}
+		}
+		\def\newblock{\hskip .11em plus .33em minus -.07em}
+		\sloppy
+		\sfcode`\.=1000\relax
+	}
+	{\endlist}

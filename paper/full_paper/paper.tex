@@ -1,0 +1,77 @@
+\documentclass[12pt]{jreport}
+\usepackage{styles/epsf}
+\usepackage{fleqn}
+\usepackage{hhline}
+\usepackage{styles/soturon}
+\usepackage{fancyhdr}
+\usepackage[dvipdfm]{graphicx}
+
+\title{ファラデーの電荷研究の実用化に向けて}
+\author{大沼 奏太}
+
+\newcommand{\Vec}[1]{{\mbox{\boldmath $#1$}}}
+\newcommand{\dfrac}[2]{{\displaystyle \frac{#1}{#2}}}
+
+\newcommand{\figref}[1]{図~\ref{#1}}
+\newcommand{\eqref}[1]{式(\ref{#1})}
+\newcommand{\tabref}[1]{表~\ref{#1}}
+\newcommand{\bibref}[1]{文献~\cite{#1}}
+
+\newcommand{\chref}[1]{第~\ref{#1}~章}
+\newcommand{\secref}[1]{第~\ref{#1}~節}
+
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%↑これがあると目次が出ません．
+%マニュアルなど参考資料を添付したいときは，参考資料の内容をinputせずに
+%目次を作ってから\nofilesで目次を更新しないようにして参考資料をinputします．
+%そうすると参考資料はタイトルだけが表示されます．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+\pagenumbering{roman}
+
+\newpage
+\input{chapters/00_abstract}
+
+\newpage
+
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+\pagestyle{fancy}
+\rhead{\leftmark}
+\lhead{}
+\cfoot{\thepage}
+\renewcommand{\chaptermark}[1]{\markboth{第\ \thechapter\ 章~#1}{}}
+
+\pagenumbering{arabic}
+
+% 本文
+\input{chapters/98_introduction}
+
+\input{chapters/99_summary}
+
+% 謝辞
+\newpage
+\input{chapters/acknowledgments}
+
+% 参考文献
+\newpage
+\input{chapters/references}
+
+% 発表論文
+\newpage
+\input{chapters/publications}
+
+\end{document}
