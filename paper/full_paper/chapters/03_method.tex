@@ -1,9 +1,74 @@
 \chapter{提案手法}
 
 \section{システム概要}
+本研究では, エッジデバイス上で高速かつ正確な欠陥検出を実現するために, 知識蒸留に基づく軽量画像認識モデルの構築手法を提案する.
+具体的には, まず教師モデルの候補として, いくつかの最先端のCNNベースおよびTransformerベースの画像認識モデルを比較し, 欠点豆を見逃さないことに重点を置いた教師モデルを選定する.
+次に, エッジコンピュータとしてRaspberry Pi 5を用い, その計算資源に適した軽量な生徒モデルを設計し, 教師モデルから知識蒸留を行う.
+図\ref{fig:bigrecgsys}に提案システムの概要を示す.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=14cm]{figures/system.drawio.png}
+\caption{提案システムの概要図}     
+\label{fig:bigrecgsys}
+\end{center}
+\end{figure}
 
 \section{教師モデルの選定}
+本研究では, 欠点豆の検出に適した教師モデルを選定するために, 代表的なCNNベースおよびTransformerベースの画像認識モデルを比較検討する.
+以下の表\ref{table:teacher_models}に, 比較対象とする教師モデルの一覧を示す.
+これらの中から, CNN, ViTそれぞれ, 欠点豆の見逃しを最小限に抑えることができるモデルを選定する.
+
+\begin{table}[htbp]
+\caption{教師モデルの比較一覧}
+\label{table:teacher_models}
+\begin{center}
+\begin{tabular}{clcc} \hline
+  アーキテクチャ & モデル名 & 計算量 & パラメータ数 \\ \hline
+  \multirow{4}{*}{CNN} & CNN(自作) & 1.2 GFLOPs & 2.5M \\
+   & ResNet18\cite{he2016deep} & 4.1 GFLOPs & 25.6M \\
+   & ResNet50\cite{he2016deep} & 4.1 GFLOPs & 25.6M \\
+   & EfficientNet-B0\cite{tan2019efficientnet} & 0.4 GFLOPs & 5.3M \\ \hline
+  \multirow{7}{*}{ViT} & ViT-b16 & 17.6 GFLOPs & 86M \\
+   & DeiT Small & 4.5 GFLOPs & 27.6M \\
+   & DeiT Base & 4.5 GFLOPs & 27.6M \\
+   & DeiT Base Distilled & 4.5 GFLOPs & 27.6M \\
+   & Swin Transformer Tiny\cite{liu2021swin} & 4.5 GFLOPs & 27.6M \\
+   & Swin Transformer Small\cite{liu2021swin} & 4.5 GFLOPs & 27.6M \\
+   & Swin Transformer Base\cite{liu2021swin} & 4.5 GFLOPs & 27.6M \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
 
 \section{生徒モデルの設計}
+生徒モデルは, Raspberry Pi 5上でのリアルタイム推論を目指し, 自作した軽量CNNモデルを採用する.
+構成の詳細を表\ref{table:student_model}に示す.
+本モデルは, 3層の畳み込みブロックと分類器から構成される.
+各畳み込みブロックは3×3の畳み込みを基本とし, 畳み込み層, 正規化(BN), 活性化(ReLU), プーリングで構成される.
+本モデルは, 計算量を抑えつつも, 欠点豆の特徴をある程度捉えることができるように設計されている.
+
+\begin{table}[htbp]
+\centering
+\caption{生徒モデルの構成}
+\label{table:student_model}
+\begin{tabular}{lccc} \hline
+  Block & Component Layers & Output Size & Number of Channels \\ \hline
+  Input & - & 224 x 224 & 3 \\
+  Block1 & Conv2d (3x3), BN, ReLU, MaxPool & 112 x 112 & 8 \\
+  Block2 & Conv2d (3x3), BN, ReLU, MaxPool & 56 x 56 & 16 \\
+  Block3 & Conv2d (3x3), BN, ReLU, MaxPool & 28 x 28 & 32 \\
+  Classifier & Global Avg Pool, Linear & 1 x 1 & - \\ \hline
+\end{tabular}
+\end{table}
 
 \section{知識蒸留の実装}
+知識蒸留は, 教師モデルの出力分布(ソフトラベル)と正解ラベル(ハードラベル)の両方を用いる手法を採用する.
+本研究では, 教師モデルと生徒モデルの出力分布間のKullback-Leiblerダイバージェンスを蒸留損失として用いる.
+全体の損失関数は以下のように定義される.
+\begin{equation}
+  L = \alpha T^2 L_{KL}(p^{\tau}_{s}, p^{\tau}_{t}) + (1 - \alpha) L_{CE}(y, p_{s})
+\end{equation}
+ここで, $T$は温度パラメータ, $\alpha$は損失の重み付け係数, $L_{KL}$はKullback-Leiblerダイバージェンス, $L_{CE}$は正解ラベルと生徒モデルの予測のクロスエントロピー損失, $p^{\tau}_{s}$および$p^{\tau}_{t}$はそれぞれ生徒モデルと教師モデルの温度Tでソフト化された出力分布, yは正解ラベルを表す.
+温度$T$が高いほど, 教師モデルの出力分布が滑らかになり, 生徒モデルは正しいクラスだけではなく, 相対的な関係も学習できるようになる. 
+例えば, 豆が正常であると分類されたが, わずかに欠点豆の特徴も持っている場合, 教師モデルはその微妙な違いを反映した出力を生成することができる.
+予備実験に基づき, 全ての実験において温度$T=2$, 重み付け係数$\alpha=0.5$を採用する.

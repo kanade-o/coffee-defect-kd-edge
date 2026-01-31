@@ -45,6 +45,11 @@ Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn, Xiaohua
 \newblock An image is worth 16x16 words: Transformers for image recognition at scale.
 \newblock In {\em International Conference on Learning Representations (ICLR)}, 2021.
 
+\bibitem{touvron2021deit}
+Hugo Touvron, Matthieu Cord, Matthijs Douze, Francisco Massa, Alexandre Sablayrolles, and Herv{\'e} J{\'e}gou.
+\newblock Training data-efficient image transformers \& distillation through attention.
+\newblock In {\em Proceedings of the 38th International Conference on Machine Learning (ICML)}, pages 10347--10357, 2021.
+
 \bibitem{liu2021swin}
 Ze~Liu, Yutong Lin, Yue Cao, Han Hu, Yixuan Wei, Zheng Zhang, Stephen Lin, and Baining Guo.
 \newblock Swin transformer: Hierarchical vision transformer using shifted windows.
