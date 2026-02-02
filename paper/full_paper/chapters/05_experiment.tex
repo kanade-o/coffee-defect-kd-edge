@@ -82,12 +82,62 @@ Raspberry Pi 5のような限られたメモリ容量を持つエッジデバイ
 \end{center}
 \end{table}
 
+表~\ref{table:result_teacher_selection}に, 各教師モデルの分類性能評価結果を示す. 
+本研究では, 欠点豆の見逃しを最小限に抑えることが重要であるため, 再現率を最も重視し, その次にF1スコアを重視して教師モデルを選定した. 
+表~\ref{table:result_teacher_selection}を見ると, CNNベースのモデルでは, EfficientNet-b0が最も高い再現率(0.992)を達成したが, F1スコアは0.958であった. 
+それに対し, 二番目に高い再現率(0.990)を示したResNet-50は, F1スコアも0.981と高く, バランスの取れた性能を示した. 
+そのため, CNNベースの教師モデルとしてResNet-50を選定した. 
+一方, Transformerベースのモデルでは, Swin Transformer Smallが最も高い再現率(0.994)とF1スコア(0.982)を達成した. 
+したがって, Transformerベースの教師モデルとしてSwin Transformer Smallを選定した.
+
+\begin{table}[htbp]
+\caption{教師モデルの分類性能評価結果}
+\label{table:result_teacher_selection}
+\begin{center}
+\begin{tabular}{llcccc} \hline
+アーキテクチャ & モデル & Accuracy & Precision & Recall & F1 score \\ \hline
+\multirow{4}{*}{CNN} & CNN (Customized) & 0.918 & 0.912 & 0.926 & 0.919 \\
+ & EfficientNet-b0 & 0.956 & 0.925 & 0.992 & 0.958 \\
+ & ResNet-18 & 0.975 & 0.981 & 0.968 & 0.975 \\
+ & ResNet-50 & 0.981 & 0.973 & 0.990 & 0.981 \\\hline
+\multirow{7}{*}{ViT} & ViT-b16 & 0.959 & 0.954 & 0.964 & 0.959 \\
+ & DeiT-Small & 0.968 & 0.973 & 0.963 & 0.968 \\
+ & DeiT-Base & 0.976 & 0.965 & 0.988 & 0.976 \\
+ & DeiT-Base-Distilled & 0.976 & 0.965 & 0.985 & 0.975 \\
+ & Swin-Tiny & 0.981 & 0.983 & 0.979 & 0.981 \\
+ & Swin-Small & 0.982 & 0.970 & 0.994 & 0.982 \\
+ & Swin-Base & 0.980 & 0.976 & 0.984 & 0.980 \\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
 \section{知識蒸留の効果検証}
 生徒モデルの知識蒸留では, 教師モデルと同様の学習率スケジューラ(ウォームアップ+コサインアニーリング)を使用し, 150エポックの学習を行った.
 蒸留時には, 蒸留損失項の重み$\alpha$を0.5, 温度パラメータ$T$を2.0に設定した.
 
 知識蒸留の効果を検証するため, 生徒モデル単独での学習結果と, 各教師モデルから蒸留した場合の性能を比較した.
 これにより, CNNベース教師モデルおよびTransformerベース教師モデルからの知識蒸留の有効性を評価した.
+
+表~\ref{table:student_results}に, 知識蒸留の効果検証結果を示す. 
+生徒モデル単独での学習では, 再現率0.910, F1スコア0.927を達成した. 
+ResNet-50から蒸留を行ったモデルでは, 再現率0.885, F1スコア0.905と, 生徒単独学習を下回る結果となった. 
+一方, Swin Transformer Smallから蒸留を行ったモデルでは, 再現率0.943, F1スコア0.945を達成し, 生徒単独学習を大幅に上回る結果となった. 
+そのため, Swin Transformer Smallから知識蒸留を行った生徒モデルを最終的な提案モデルとして採用した.
+
+\begin{table}[htbp]
+\caption{生徒モデルの分類性能比較}
+\label{table:student_results}
+\begin{center}
+\begin{tabular}{lcccc} \hline
+モデル & Accuracy & Precision & Recall & F1 score \\ \hline
+生徒(蒸留なし) & 0.928 & 0.944 & 0.910 & 0.927 \\
+生徒(ResNet-50からの蒸留) & 0.907 & 0.926 & 0.885 & 0.905 \\
+生徒(Swin-Smallからの蒸留) & 0.945 & 0.948 & 0.943 & 0.945 \\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
 
 \section{エッジデバイスでの性能評価}
 学習済みモデルの実用性を評価するため, Raspberry Pi 5上で推論ベンチマークを実施した.
@@ -96,3 +146,24 @@ Raspberry Pi 5のような限られたメモリ容量を持つエッジデバイ
 まず, キャッシュおよびランタイム条件を安定させるため, 測定開始前に20回のダミー推論を実行した.
 その後, 前述の評価指標に基づき, 推論時間とリソース使用量を測定した.
 これにより, エッジデバイス上でのリアルタイム処理の実現可能性を評価した.
+
+表~\ref{table:edge_performance}に, エッジデバイス上での推論性能評価結果を示す. 
+提案モデルは, 平均レイテンシ9.05ms, スループット110.5FPSを達成し, 非常に高速な推論性能を示した. 
+一方, 教師モデルであるResNet-50およびSwin Transformer Smallは, それぞれ364.7msおよび226.6msの平均レイテンシを示し, 
+スループットでは2.7FPSおよび4.7FPSにとどまった. 
+CPU使用率に関しては, いずれのモデルも96\%を超える高い値を示したが, 提案モデルは96.5\%と若干低く抑えられた.
+メモリ使用量では, 提案モデルが3.16MBと非常に低く, ResNet-50の98.5MBおよびSwin Transformer Smallの185.3MBと比較して大幅に軽量であることが分かった.
+
+\begin{table}[htbp]
+\caption{エッジデバイス上での推論性能}
+\label{table:edge_performance}
+\begin{center}
+\begin{tabular}{lcccc} \hline
+\noalign{\vskip 3pt}
+\shortstack{モデル} & \shortstack{平均レイテンシ\\(ms)} & \shortstack{スループット\\(FPS)} & \shortstack{CPU使用率\\(\%)} & \shortstack{メモリ使用率\\(MB)} \\ \hline
+提案モデル & 9.05 & 110.5 & 96.5 & 3.16 \\
+ResNet-50 (教師) & 364.7 & 2.7 & 97.0 & 98.5 \\
+Swin-Small (教師) & 226.6 & 4.7 & 98.2 & 185.3 \\\hline
+\end{tabular}
+\end{center}
+\end{table}
