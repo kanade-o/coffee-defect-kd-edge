@@ -1,19 +1,24 @@
 \begin{thebibliography}{10}
 
+\bibitem{dscoffee_grade}
+{DS Coffee Roaster}.
+\newblock コーヒー生豆のグレード, 2024.
+\newblock https://dscoffeeroaster.com/grade-of-coffee-beans/.
+
 \bibitem{pinto2017classification}
 Carlito Pinto, Junya Furukawa, Hidekazu Fukai, and Satoshi Tamura.
 \newblock Classification of green coffee bean images based on defect types using convolutional neural network (cnn).
-\newblock pages 1--5, 2017.
+\newblock pp. 1--5, 2017.
 
 \bibitem{huang2020smart}
 Nen-Fu Huang, Dong-Lin Chou, Chia-An Lee, Feng-Ping Wu, An-Chi Chuang, Yi-Hsien Chen, and YinChun Tsai.
 \newblock Smart agriculture: real-time classification of green coffee beans by using a convolutional neural network.
-\newblock {\em IET Smart Cities}, 2(4):167--172, 2020.
+\newblock {\em IET Smart Cities}, Vol.~2, No.~4, pp. 167--172, 2020.
 
 \bibitem{wang2021deep}
 Ping Wang, Hsien-Wei Tseng, Tzu-Ching Chen, and Chih-Hsien Hsia.
 \newblock Deep convolutional neural network for coffee bean inspection.
-\newblock {\em Sensors and Materials}, 33:2299, 07 2021.
+\newblock {\em Sensors and Materials}, Vol.~33, p. 2299, 07 2021.
 
 \bibitem{fukai2018classification}
 Hidekazu Fukai, Junya Furukawa, Hiroki Katsuragawa, Carlito Pinto, and Carmelita Afonso.
@@ -28,17 +33,17 @@ Geoffrey Hinton, Oriol Vinyals, and Jeff Dean.
 \bibitem{he2016deep}
 Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
 \newblock Deep residual learning for image recognition.
-\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, pages 770--778, 2016.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, pp. 770--778, 2016.
 
 \bibitem{tan2019efficientnet}
 Mingxing Tan and Quoc~V. Le.
 \newblock Efficientnet: Rethinking model scaling for convolutional neural networks.
-\newblock In {\em Proceedings of the 36th International Conference on Machine Learning (ICML)}, pages 6105--6114, 2019.
+\newblock In {\em Proceedings of the 36th International Conference on Machine Learning (ICML)}, pp. 6105--6114, 2019.
 
 \bibitem{vaswani2017attention}
 Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan~N. Gomez, Lukasz Kaiser, and Illia Polosukhin.
 \newblock Attention is all you need.
-\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)}, volume~30, 2017.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)}, Vol.~30, 2017.
 
 \bibitem{dosovitskiy2021image}
 Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn, Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg Heigold, Sylvain Gelly, Jakob Uszkoreit, and Neil Houlsby.
@@ -48,12 +53,12 @@ Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn, Xiaohua
 \bibitem{touvron2021deit}
 Hugo Touvron, Matthieu Cord, Matthijs Douze, Francisco Massa, Alexandre Sablayrolles, and Herv{\'e} J{\'e}gou.
 \newblock Training data-efficient image transformers \& distillation through attention.
-\newblock In {\em Proceedings of the 38th International Conference on Machine Learning (ICML)}, pages 10347--10357, 2021.
+\newblock In {\em Proceedings of the 38th International Conference on Machine Learning (ICML)}, pp. 10347--10357, 2021.
 
 \bibitem{liu2021swin}
 Ze~Liu, Yutong Lin, Yue Cao, Han Hu, Yixuan Wei, Zheng Zhang, Stephen Lin, and Baining Guo.
 \newblock Swin transformer: Hierarchical vision transformer using shifted windows.
-\newblock In {\em Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)}, pages 10012--10022, 2021.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)}, pp. 10012--10022, 2021.
 
 \bibitem{yolov8_ultralytics}
 Glenn Jocher, Ayush Chaurasia, and Jing Qiu.
