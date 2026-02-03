@@ -18,17 +18,17 @@
 \label{table:defective_beans}
 \begin{tabular}{ll} \hline
   欠点豆の種類 & 説明 \\ \hline
-  欠けた豆 & ひび割れや欠けがある豆 \\
-  カビ豆 & カビが生えている豆 \\
-  虫食い豆 & 虫に食べられた跡がある豆 \\
-  奇形豆 & 異常な形状の豆 \\ \hline
+  欠け & ひび割れや欠けがある豆 \\
+  虫食い & 虫に食べられた跡がある豆 \\
+  カビ & カビや発酵している豆 \\
+  奇形 & 異常な形状の豆 \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=14cm]{figures/defective_beans.png}
-\caption{欠点豆の例}     
+\includegraphics[width=14cm]{figures/beans.png}
+\caption{正常豆と欠点豆の例}     
 \label{fig:defective_beans}
 \end{center}
 \end{figure}
@@ -39,8 +39,7 @@
 撮影した画像の一例を図~\ref{fig:dataset_black}に示す.
 撮影した画像は一枚に複数の豆が写っているため切り出す必要がある. 
 そこで, 物体検出モデルYOLOを用いて, 各豆の位置を検出し, 分類クラスごとに切り出しを行った.
-図~\ref{fig:yolo1}および図~\ref{fig:yolo2}に, 物体検出モデルYOLOの学習を行う際に使用した画像の例を示す.
-!!!!YOLOのバージョンと参考文献を追加する!!!!
+図~\ref{fig:yolo1}および図~\ref{fig:yolo2}に, 物体検出モデルYOLOv8~\cite{yolov8_ultralytics}の学習を行う際に使用した画像の例を示す.
 
 切り出した画像に対し, 背景除去を行い, 豆の部分とその極周辺のみを抽出した.
 その後, 黒の背景でした画像の周りを囲み, 180x180ピクセルにリサイズした.
@@ -49,14 +48,14 @@
 \begin{figure}[ht] \begin{tabular}{cc} 
 %---- 最初の図 --------------------------- 
 \begin{minipage}[t]{0.45\hsize} \centering 
-\includegraphics[scale=0.07]{figures/dataset_black.pdf}
-\caption{データ収集の撮影環境!!!画像変える!!!}     
+\includegraphics[scale=0.055]{figures/dataset_env.jpg}
+\caption{データ収集の撮影環境}     
 \label{fig:dataset_env}
 \end{minipage} & 
 %---- 2番目の図 -------------------------- 
 \begin{minipage}[t]{0.45\hsize} \centering 
-\includegraphics[scale=0.07]{figures/dataset_black.pdf}
-\caption{データ収集の撮影環境!!!画像変える!!!}     
+\includegraphics[scale=0.055]{figures/dataset_black.pdf}
+\caption{コーヒー生豆を紙に置いた様子}     
 \label{fig:dataset_black}
 \end{minipage} 
 %---- 図はここまで ---------------------- 
@@ -68,13 +67,13 @@
 \begin{figure}[ht] \begin{tabular}{cc} 
 %---- 最初の図 --------------------------- 
 \begin{minipage}[t]{0.45\hsize} \centering 
-\includegraphics[keepaspectratio, scale=0.3]{figures/yolo1.pdf} 
+\includegraphics[keepaspectratio, scale=0.25]{figures/yolo1.pdf} 
 \caption{物体検出モデルYOLOの学習に使用した画像例(1)}
 \label{fig:yolo1}
 \end{minipage} & 
 %---- 2番目の図 -------------------------- 
 \begin{minipage}[t]{0.45\hsize} \centering 
-\includegraphics[keepaspectratio, scale=0.3]{figures/yolo2.pdf} 
+\includegraphics[keepaspectratio, scale=0.25]{figures/yolo2.pdf} 
 \caption{物体検出モデルYOLOの学習に使用した画像例(2)} 
 \label{fig:yolo2} 
 \end{minipage} 
