@@ -28,17 +28,17 @@
 \begin{center}
 \begin{tabular}{clcc} \hline
   アーキテクチャ & モデル名 & 計算量 & パラメータ数 \\ \hline
-  \multirow{4}{*}{CNN} & CNN(自作) & 1.2 GFLOPs & 2.5M \\
-   & ResNet18\cite{he2016deep} & 4.1 GFLOPs & 25.6M \\
-   & ResNet50\cite{he2016deep} & 4.1 GFLOPs & 25.6M \\
-   & EfficientNet-B0\cite{tan2019efficientnet} & 0.4 GFLOPs & 5.3M \\ \hline
-  \multirow{7}{*}{ViT} & ViT-b16 & 17.6 GFLOPs & 86M \\
-   & DeiT Small & 4.5 GFLOPs & 27.6M \\
-   & DeiT Base & 4.5 GFLOPs & 27.6M \\
-   & DeiT Base Distilled & 4.5 GFLOPs & 27.6M \\
-   & Swin Transformer Tiny\cite{liu2021swin} & 4.5 GFLOPs & 27.6M \\
-   & Swin Transformer Small\cite{liu2021swin} & 4.5 GFLOPs & 27.6M \\
-   & Swin Transformer Base\cite{liu2021swin} & 4.5 GFLOPs & 27.6M \\ \hline
+  \multirow{4}{*}{CNN} & CNN(自作) & 0.15 GMAC & 12.86 M \\
+   & ResNet18 & 1.83 GMAC & 11.69 M \\
+   & ResNet50 & 4.13 GMAC & 25.6 M \\
+   & EfficientNet-B0 & 0.39 GMAC & 5.29 M \\ \hline
+  \multirow{7}{*}{ViT} & ViT-b16 & 8.78 GMAC & 86.57 M \\
+   & DeiT Small & 3.22 GMAC & 22.05 M \\
+   & DeiT Base & 12.02 GMAC & 86.57 M \\
+   & DeiT Base Distilled & 12.09 GMAC & 87.34 M \\
+   & Swin Transformer Tiny & 4.38 GMAC & 28.29 M \\
+   & Swin Transformer Small & 8.56 GMAC & 49.61 M \\
+   & Swin Transformer Base & 15.19 GMAC & 87.77 M \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -55,7 +55,7 @@
 \caption{生徒モデルの構成}
 \label{table:student_model}
 \begin{tabular}{lccc} \hline
-  Block & Component Layers & Output Size & Number of Channels \\ \hline
+  ブロック & 構成層 & 出力サイズ & チャンネル数 \\ \hline
   Input & - & 224 x 224 & 3 \\
   Block1 & Conv2d (3x3), BN, ReLU, MaxPool & 112 x 112 & 8 \\
   Block2 & Conv2d (3x3), BN, ReLU, MaxPool & 56 x 56 & 16 \\
