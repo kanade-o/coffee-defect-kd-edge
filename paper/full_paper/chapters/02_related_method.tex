@@ -1,7 +1,7 @@
 \chapter{関連技術}
 
 本章では, 本研究で用いる主要な技術について概説する. 
-まず深層学習の基本概念を述べ, 次にCNNおよびTransformerベースの画像認識モデルについて説明する. 
+まず, 深層学習の基本概念を述べ, 次にCNNおよびTransformerベースの画像認識モデルについて説明する. 
 さらに, モデルの軽量化手法である知識蒸留と, 本研究の実行環境であるエッジコンピューティングについて述べる.
 
 \section{深層学習}
@@ -26,7 +26,7 @@ CNNは畳み込み層, プーリング層, 全結合層から構成され, 画�
 
 \subsection{ResNetとは}
 
-ResNet(Residual Network)は, Heらによって2015年に提案された深層CNNアーキテクチャである~\cite{he2016deep}. 
+ResNet(Residual Network)は, Heらによって2016年に提案された深層CNNアーキテクチャである~\cite{he2016deep}. 
 従来の深いネットワークでは, 層を増やすほど学習が困難になる勾配消失問題が生じていた.
 
 ResNetでは, 残差接続(Skip Connection)と呼ばれる構造を導入し, 入力をそのまま出力に加算することで, この問題を解決した. 
@@ -60,8 +60,8 @@ ViTでは, 入力画像を小さなパッチに分割し, 各パッチを系列�
 ViTは大規模なデータセットで事前学習することにより, CNNに匹敵あるいはそれを上回る認識精度を達成する. 
 画像全体の大域的な関係性を捉えられる点がViTの特長であり, 複雑なパターンの認識に有効である.
 
-\subsection{Data-efficient image Transformersとは}
-Data-efficient image Transformers(DeiT)は, Touvronらによって2021年に提案されたViTの改良版である~\cite{touvron2021deit}.
+\subsection{Data-efficient Image Transformersとは}
+Data-efficient Image Transformers(DeiT)は, Touvronらによって2021年に提案されたViTの改良版である~\cite{touvron2021deit}.
 ViTが高い性能を発揮するには数億枚規模の大規模データセットでの事前学習が必要であったのに対し, DeiTはImageNet-1Kのような比較的小規模なデータセットでも効率的に学習できる.
 
 DeiTの主要な技術は, 蒸留トークンを用いた知識蒸留である. 
