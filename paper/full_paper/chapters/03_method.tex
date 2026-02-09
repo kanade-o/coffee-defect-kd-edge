@@ -28,7 +28,7 @@
 \begin{center}
 \begin{tabular}{clcc} \hline
   アーキテクチャ & モデル名 & 計算量 & パラメータ数 \\ \hline
-  \multirow{4}{*}{CNN} & CNN(自作) & 0.15 GMAC & 12.86 M \\
+  \multirow{4}{*}{CNN} & CNN & 0.15 GMAC & 12.86 M \\
    & ResNet18 & 1.83 GMAC & 11.69 M \\
    & ResNet50 & 4.13 GMAC & 25.6 M \\
    & EfficientNet-B0 & 0.39 GMAC & 5.29 M \\ \hline
@@ -44,7 +44,7 @@
 \end{table}
 
 \section{生徒モデルの設計}
-生徒モデルは, Raspberry Pi 5上でのリアルタイム推論を目指し, 自作した軽量CNNモデルを採用する.
+生徒モデルは, Raspberry Pi 5上でのリアルタイム推論を目指し, PyTorchを用いて独自に実装した軽量CNNモデルを採用する.
 構成の詳細を表\ref{table:student_model}に示す.
 本モデルは, 3層の畳み込みブロックと分類器から構成される.
 各畳み込みブロックは3×3の畳み込みを基本とし, 畳み込み層, 正規化(BN), 活性化(ReLU), プーリングで構成される.
