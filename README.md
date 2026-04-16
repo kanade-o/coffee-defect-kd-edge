@@ -1,6 +1,6 @@
-# kosen_research
+# coffee-defect-kd-edge
 
-深層学習と知識蒸留（Knowledge Distillation）を用いた、エッジコンピュータ（Raspberry Pi 5）向けコーヒー生豆欠陥検出システムの研究リポジトリです。
+高専本科5年と専攻科で取り組んだ、深層学習と知識蒸留（Knowledge Distillation）を用いた、エッジコンピュータ（Raspberry Pi 5）向けコーヒー生豆欠陥検出システムの研究リポジトリです。
 
 大規模な教師モデル（Swin Transformer Small, ResNet-50 など）から軽量な生徒 CNN へ知識蒸留を行い、Raspberry Pi 5 上でリアルタイム推論（約 9ms/枚, 約 110FPS）を実現しています。独自に構築した 72,000 枚規模のコーヒー生豆画像データセットを使用しています。
 
