@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 ---
 
-## configs/ — Hydra 設定ファイル
+### configs/ — Hydra 設定ファイル
 
 [Hydra](https://hydra.cc/) を用いて、モデル・データセット・学習条件を YAML ファイルで管理しています。
 
@@ -90,7 +90,7 @@ configs/
     └── test3.yaml
 ```
 
-### 設定の仕組み
+#### 設定の仕組み
 
 - `config.yaml` が通常学習（`src/train/train.py`）のメイン設定で、`defaults` で `data`, `train`, `model` を組み合わせます。
 - `config_kd_*.yaml` は知識蒸留用の設定で、教師モデル（`teacher`）と蒸留パラメータ（`kd`）を追加で定義しています。
@@ -102,7 +102,7 @@ configs/
 
 ---
 
-## src/ — ソースコード
+### src/ — ソースコード
 
 学習・知識蒸留・ユーティリティ・エッジ評価スクリプトが含まれます。
 
@@ -159,55 +159,55 @@ src/
     └── old/
 ```
 
-### 主要スクリプトの説明
+#### 主要スクリプトの説明
 
-#### `src/train/train.py` — 通常学習
+##### `src/train/train.py` — 通常学習
 
 Hydra で設定を読み込み、指定したモデルを train/val/test データで学習します。Cosine スケジューラ（10% ウォームアップ）付き。学習終了後にテストデータで Accuracy, Precision, Recall, F1, AUC を算出し、ROC 曲線・PR 曲線を保存します。
 
-#### `src/train/train_without_scheduler.py` — 通常学習（スケジューラなし）
+##### `src/train/train_without_scheduler.py` — 通常学習（スケジューラなし）
 
 `train.py` のスケジューラを除いたシンプル版。固定学習率で学習を行います。
 
-#### `src/kd/kd_swin_soft.py` — ソフトラベル KD
+##### `src/kd/kd_swin_soft.py` — ソフトラベル KD
 
 中間層の AT を使わず、ロジットレベルのソフトラベル KD のみを行うスクリプト。`(1-α)*CE + α*KD` の損失関数で学習します。
 
-#### `src/kd/kd_resnet_hard.py` — ResNet-50 教師による複数層 AT+KD
+##### `src/kd/kd_resnet_hard.py` — ResNet-50 教師による複数層 AT+KD
 
 ResNet-50 を教師とし、`kd.pairs` で指定した複数の中間層ペアに対して AT 損失を計算します。
 
-#### `src/utils/eval_model.py` — 評価ユーティリティ
+##### `src/utils/eval_model.py` — 評価ユーティリティ
 
 テストデータに対する Accuracy, Precision, Recall, F1, AUC の計算と、ROC 曲線・Precision-Recall 曲線の描画を行います。
 
-#### `src/utils/lr_finder.py` — 学習率探索
+##### `src/utils/lr_finder.py` — 学習率探索
 
 Optuna を用いて学習率（`lr`）と weight_decay のハイパーパラメータ最適化を行います。F1 スコアを最大化する方向で 30 トライアル実行します。
 
-#### `src/utils/batchsize_finder.py` — バッチサイズ探索
+##### `src/utils/batchsize_finder.py` — バッチサイズ探索
 
 PyTorch Lightning の Tuner を使い、GPU メモリに収まる最大バッチサイズを二分探索で求めます。
 
-#### `src/utils/batchsize_finder_kd.py` — 蒸留時バッチサイズ探索
+##### `src/utils/batchsize_finder_kd.py` — 蒸留時バッチサイズ探索
 
 通常学習と蒸留学習（教師+生徒の両方が VRAM を消費）の両方で最大バッチサイズを探索し、公平比較のための共通バッチサイズを決定します。
 
-#### `src/utils/normalize_finder.py` — 正規化値算出
+##### `src/utils/normalize_finder.py` — 正規化値算出
 
 データセット全体の Mean/Std を算出します。結果は `normalize_value.txt` に記録されています。
 
-#### `src/utils/view_model_detail.py` — モデル情報一覧
+##### `src/utils/view_model_detail.py` — モデル情報一覧
 
 ptflops を使い、各モデルの計算量（GMAC）とパラメータ数（M）を一覧表示します。モデル選定の参考として使用します。
 
-#### `src/utils/download_models.py` / `src/utils/download_models_no_pretrained.py` — モデルダウンロード
+##### `src/utils/download_models.py` / `src/utils/download_models_no_pretrained.py` — モデルダウンロード
 
 timm の事前学習済みモデルの重みをローカルに保存するスクリプトです。`download_models_no_pretrained.py` は事前学習なしの重みを保存します。
 
 ---
 
-## src/eval_on_raspberrypi/ — エッジデバイス評価
+### src/eval_on_raspberrypi/ — エッジデバイス評価
 
 Raspberry Pi 5 上でモデルの推論性能をベンチマークするためのスクリプトと結果が含まれます。
 
@@ -224,7 +224,7 @@ src/eval_on_raspberrypi/
 
 ---
 
-## outputs/ — 学習出力
+### outputs/ — 学習出力
 
 Hydra の出力ディレクトリとして、学習実行ごとにタイムスタンプ付きディレクトリが自動生成されます。各ディレクトリには以下が含まれます:
 
@@ -248,39 +248,6 @@ outputs/
 │   ├── resnet/                # ResNet-50 教師による蒸留結果
 │   └── swin/                  # Swin 教師による蒸留結果
 └── 2025-09-22/, 2025-09-24/   # 日付ごとの実行結果
-```
-
----
-
-## paper/ — 論文・発表資料
-
-```
-paper/
-├── full_paper/                # 卒業論文（LaTeX）
-│   ├── paper.tex              # メインファイル
-│   ├── chapters/              # 各章の LaTeX ファイル
-│   │   ├── 00_abstract.tex    # 論文要旨
-│   │   ├── 01_introduction.tex # 序論
-│   │   ├── 02_related_method.tex # 関連手法
-│   │   ├── 03_method.tex      # 提案手法
-│   │   ├── 04_dataset.tex     # データセット
-│   │   ├── 05_experiment.tex  # 実験
-│   │   ├── 06_discussion.tex  # 考察
-│   │   ├── 07_conclusion.tex  # 結論
-│   │   ├── acknowledgments.tex # 謝辞
-│   │   └── references.tex     # 参考文献
-│   ├── figures/               # 図表
-│   ├── styles/                # LaTeX スタイルファイル
-│   ├── references.bib         # BibTeX 参考文献
-│   ├── .latexmkrc             # latexmk 設定
-│   └── out/                   # コンパイル出力
-└── final_presentation/        # 最終発表スライド（LaTeX）
-    ├── template.tex           # 発表用テンプレート
-    ├── jpreprint.cls          # スタイルクラス
-    ├── bio.bib                # 参考文献
-    ├── system.pdf             # システム構成図
-    ├── cloudrain.png          # 画像素材
-    └── out/                   # コンパイル出力
 ```
 
 ---
