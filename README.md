@@ -4,6 +4,17 @@
 
 大規模な教師モデル（Swin Transformer Small, ResNet-50 など）から軽量な生徒 CNN へ知識蒸留を行い、Raspberry Pi 5 上でリアルタイム推論（約 9ms/枚, 約 110FPS）を実現しています。独自に構築した 72,000 枚規模のコーヒー生豆画像データセットを使用しています。
 
+## 索引
+
+1. [環境構築](#環境構築)
+2. [ディレクトリ構成](#ディレクトリ構成)
+3. [configs/ — Hydra 設定ファイル](#configs--hydra-設定ファイル)
+4. [src/ — ソースコード](#src--ソースコード)
+5. [src/eval_on_raspberrypi/ — エッジデバイス評価](#srceval_on_raspberrypi--エッジデバイス評価)
+6. [outputs/ — 学習出力](#outputs--学習出力)
+7. [paper/ — 論文・発表資料](#paper--論文発表資料)
+8. [実行方法](#実行方法)
+
 ## 環境構築
 
 - Python 3.13.3（`.python-version` で指定）
