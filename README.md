@@ -15,15 +15,6 @@
 7. [paper/ — 論文・発表資料](#paper--論文発表資料)
 8. [実行方法](#実行方法)
 
-## 環境構築
-
-- Python 3.13.3（`.python-version` で指定）
-- 依存パッケージのインストール:
-
-```bash
-pip install -r requirements.txt
-```
-
 ---
 
 ## ディレクトリ構成
@@ -37,6 +28,27 @@ pip install -r requirements.txt
 ├── src/                      # ソースコード（学習・蒸留・ユーティリティ）
 ├── outputs/                  # 学習実行時の出力（ログ・モデル重み・グラフ等）
 └── paper/                    # 論文・発表資料
+```
+
+---
+
+## 研究背景・課題
+
+## 研究目的
+
+## 技術選定と意図
+
+## 結果
+
+---
+
+## 環境構築
+
+- Python 3.13.3（`.python-version` で指定）
+- 依存パッケージのインストール:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ---
