@@ -4,7 +4,7 @@
 
 大規模な教師モデル（Swin Transformer Small, ResNet-50 など）から軽量な生徒 CNN へ知識蒸留を行い、Raspberry Pi 5 上でリアルタイム推論（約 9ms/枚, 約 110FPS）を実現しています。独自に構築した 72,000 枚規模のコーヒー生豆画像データセットを使用しています。なお、本研究で作成したデータセットはGitHubリポジトリの容量上の問題で公開できていません。
 
-本研究の論文は[こちら](paper/full_paper/out/paper.pdf)、スライドは[こちら](docs/presentation_slide.pdf)
+本研究の詳細については、[スライド](docs/presentation_slide.pdf)や[論文](paper/full_paper/out/paper.pdf)をご覧ください。
 
 ## 索引
 
