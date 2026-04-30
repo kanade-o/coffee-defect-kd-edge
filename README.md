@@ -38,7 +38,10 @@
 ## 研究背景・課題
 
 コーヒー生豆の欠点豆とは、欠け・発酵・虫食いなどといったコーヒーの風味に影響を及ぼすものを指します。
-![coffee_beans](docs/coffee_beans.png)
+
+<p align="center">
+  <img src="docs/coffee_beans.png" alt="coffee_beans">
+</p>
 この欠点豆を取り除くための方法は様々あります。
 
 中でもハンドピックという作業は人の手で欠点豆を取り除くもので、生産地や自家焙煎を行う店で主流となっています。  
@@ -81,8 +84,10 @@
 このギャップを埋めるために、知識蒸留という技術を用います。
 
 知識蒸留とは、賢いAIモデルを教師、軽量なAIモデルを生徒とし、教師モデルの出力分布を学習目標に、生徒モデルに知識を転移する手法です。
-![kd](docs/kd.png)
 
+<p align="center">
+  <img src="docs/kd.png" alt="KD">
+</p>
 ## 提案手法
 
 提案手法の全体の流れは以下の図のようになっています。
@@ -90,7 +95,9 @@
 1. 知識蒸留により、教師モデルの知識を生徒モデルに転移
 2. 転移した生徒モデルをRaspberry Pi 5上で動かし分類する
 
-![system_flow](docs/system_flow.png)
+<p align="center">
+  <img src="docs/system_flow.png" alt="system_flow">
+</p>
 
 教師モデルは、CNN系およびVision Transformer（VIT）系のモデルを候補とし、事前実験で高い性能を示したResNet-50（CNN）とSwin-Small
 (ViT)について、知識蒸留後の性能を比較したうえで、優れた方のモデルを採用します。  
@@ -109,15 +116,15 @@
 
 以下の図は知識蒸留後のモデルの分類性能（Recall）の比較をしたものです。
 
-![result_recall](docs/result_recall.png)
-
 <p align="center">
   <img src="docs/result_recall.png" alt="result_recall">
 </p>
 
 以下の図は提案手法モデルのRaspberry Pi 5上でのFPSの比較をしたものです。
 
-![result_fps](docs/result_fps.png)
+<p align="center">
+  <img src="docs/result_fps.png" alt="result_fps">
+</p>
 
 ---
 
