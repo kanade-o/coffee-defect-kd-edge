@@ -36,6 +36,7 @@
 ├── requirements.txt          # Python 依存パッケージ一覧
 ├── configs/                  # Hydra 設定ファイル群
 ├── src/                      # ソースコード（学習・蒸留・ユーティリティ）
+├── docs/                     # README 用画像・スライドなどの資料
 ├── outputs/                  # 学習実行時の出力（ログ・モデル重み・グラフ等）
 └── paper/                    # 論文・発表資料
 ```
