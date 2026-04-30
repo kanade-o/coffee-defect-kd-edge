@@ -7,18 +7,19 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 import torch.nn as nn
 from hydra.utils import instantiate, get_original_cwd
-from utils import evaluate_model, plot_roc_curve, plot_pr_curve
+from utils.eval_model import evaluate_model, plot_roc_curve, plot_pr_curve
 # from transformers import get_cosine_schedule_with_warmup  # ← 削除
 
 os.environ["TORCH_HOME"] = "/home/sota/research/sotaohnuma/.cache/torch"
 logging.basicConfig(
     filename="train.log",
     level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(message)s"
+    format="%(asctime)s %(levelname)s %(message)s",
 )
 logger = logging.getLogger()
 
 # scheduler = None  # ← 削除（スケジューラ不使用）
+
 
 def run_epoch(model, loader, loss_fn, opt=None):
     is_train = opt is not None
@@ -44,7 +45,8 @@ def run_epoch(model, loader, loss_fn, opt=None):
 
     return loss_sum / total, correct / total
 
-@hydra.main(version_base=None, config_path="../configs", config_name="config")
+
+@hydra.main(version_base=None, config_path="../../configs", config_name="config")
 def main(cfg: DictConfig):
     os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.gpu)
     global device
@@ -52,7 +54,7 @@ def main(cfg: DictConfig):
 
     print("ORIGINAL CWD :", get_original_cwd())
     print("RUN CWD      :", os.getcwd())
-    logger.info("ORIGINAL CWD : %s", get_original_cwd()) 
+    logger.info("ORIGINAL CWD : %s", get_original_cwd())
     logger.info("RUN CWD      : %s", os.getcwd())
 
     model_cfg_dict = OmegaConf.to_container(cfg.model, resolve=True)
@@ -77,38 +79,40 @@ def main(cfg: DictConfig):
     model = model.to(device)
 
     # ---------- DataLoader ----------
-    tf = transforms.Compose([
-        transforms.Resize((cfg.data.input_size, cfg.data.input_size)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
+    tf = transforms.Compose(
+        [
+            transforms.Resize((cfg.data.input_size, cfg.data.input_size)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )
 
     print("Start loading train data")
     logger.info("Start loading train data")
     train_dl = DataLoader(
         ImageFolder(cfg.data.train_dir, tf),
-        batch_size=BATCH_SIZE, 
+        batch_size=BATCH_SIZE,
         shuffle=True,
         num_workers=4,
-        pin_memory=True
+        pin_memory=True,
     )
     print("Start loading val data")
     logger.info("Start loading val data")
     val_dl = DataLoader(
         ImageFolder(cfg.data.val_dir, tf),
-        batch_size=BATCH_SIZE, 
+        batch_size=BATCH_SIZE,
         shuffle=False,
         num_workers=4,
-        pin_memory=True
+        pin_memory=True,
     )
     print("Start loading test data")
     logger.info("Start loading test data")
     test_dl = DataLoader(
         ImageFolder(cfg.data.test_dir, tf),
-        batch_size=BATCH_SIZE, 
+        batch_size=BATCH_SIZE,
         shuffle=False,
         num_workers=4,
-        pin_memory=True
+        pin_memory=True,
     )
     print("Finished DataLoader setup")
     logger.info("Finished DataLoader setup")
@@ -132,17 +136,23 @@ def main(cfg: DictConfig):
         print(f"Start: {epoch}")
         logger.info(f"Start: {epoch}")
         tr_loss, tr_acc = run_epoch(model, train_dl, loss_fn, opt)
-        vl_loss, vl_acc = run_epoch(model, val_dl,   loss_fn)
+        vl_loss, vl_acc = run_epoch(model, val_dl, loss_fn)
 
-        tr_losses.append(tr_loss); tr_accs.append(tr_acc)
-        vl_losses.append(vl_loss); vl_accs.append(vl_acc)
+        tr_losses.append(tr_loss)
+        tr_accs.append(tr_acc)
+        vl_losses.append(vl_loss)
+        vl_accs.append(vl_acc)
 
-        print(f"[{epoch+1:02d}/{cfg.train.epochs}] "
-              f"train {tr_acc:.3%}/{tr_loss:.4f} | "
-              f"val {vl_acc:.3%}/{vl_loss:.4f}")
-        logger.info(f"[{epoch+1:02d}/{cfg.train.epochs}] "
-                    f"train {tr_acc:.3%}/{tr_loss:.4f} | "
-                    f"val {vl_acc:.3%}/{vl_loss:.4f}")
+        print(
+            f"[{epoch + 1:02d}/{cfg.train.epochs}] "
+            f"train {tr_acc:.3%}/{tr_loss:.4f} | "
+            f"val {vl_acc:.3%}/{vl_loss:.4f}"
+        )
+        logger.info(
+            f"[{epoch + 1:02d}/{cfg.train.epochs}] "
+            f"train {tr_acc:.3%}/{tr_loss:.4f} | "
+            f"val {vl_acc:.3%}/{vl_loss:.4f}"
+        )
 
         if vl_acc > best_acc:
             best_acc = vl_acc
@@ -154,13 +164,19 @@ def main(cfg: DictConfig):
     plt.figure()
     plt.plot(epochs, tr_losses, label="train")
     plt.plot(epochs, vl_losses, label="val")
-    plt.xlabel("epoch"); plt.ylabel("loss"); plt.legend(); plt.title("Loss")
+    plt.xlabel("epoch")
+    plt.ylabel("loss")
+    plt.legend()
+    plt.title("Loss")
     plt.savefig("loss_curve.png", dpi=150)
 
     plt.figure()
     plt.plot(epochs, tr_accs, label="train")
     plt.plot(epochs, vl_accs, label="val")
-    plt.xlabel("epoch"); plt.ylabel("accuracy"); plt.legend(); plt.title("Accuracy")
+    plt.xlabel("epoch")
+    plt.ylabel("accuracy")
+    plt.legend()
+    plt.title("Accuracy")
     plt.savefig("accuracy_curve.png", dpi=150)
 
     # --- Test ----
@@ -178,6 +194,6 @@ def main(cfg: DictConfig):
     recall, precision, _ = curves["pr"]
     plot_pr_curve(recall, precision)
 
+
 if __name__ == "__main__":
     main()
-
