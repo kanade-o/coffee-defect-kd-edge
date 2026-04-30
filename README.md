@@ -109,8 +109,10 @@
 
 以下の図は知識蒸留後のモデルの分類性能（Recall）の比較をしたものです。
 
-<p align="center">
 ![result_recall](docs/result_recall.png)
+
+<p align="center">
+  <img src="docs/result_recall.png" alt="result_recall">
 </p>
 
 以下の図は提案手法モデルのRaspberry Pi 5上でのFPSの比較をしたものです。
